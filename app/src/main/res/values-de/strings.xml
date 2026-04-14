@@ -1,0 +1,13 @@
+<resources>
+    <string name="add_alarm">Alarm hinzufügen</string>
+    <string name="new_alarm">Neuer Alarm</string>
+    <string name="edit_alarm">Alarm bearbeiten</string>
+    <string name="threshold_percent">Schwellenwert %</string>
+    <string name="message">Nachricht</string>
+    <string name="save">Speichern</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="battery_settings_desc">Android Energiespareinstellungen</string>
+    <string name="delete_desc">Löschen</string>
+    <string name="default_msg_40">Akku fällt! Energiesparmodus aktivieren?</string>
+    <string name="default_msg_25">Akku fast leer! Bald aufladen.</string>
+</resources>

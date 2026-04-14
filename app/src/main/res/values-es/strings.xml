@@ -1,0 +1,13 @@
+<resources>
+    <string name="add_alarm">Añadir Alarma</string>
+    <string name="new_alarm">Nueva Alarma</string>
+    <string name="edit_alarm">Editar Alarma</string>
+    <string name="threshold_percent">Límite %</string>
+    <string name="message">Mensaje</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="battery_settings_desc">Ahorro de batería Android</string>
+    <string name="delete_desc">Eliminar</string>
+    <string name="default_msg_40">¡Batería bajando! ¿Activar ahorro de energía?</string>
+    <string name="default_msg_25">¡Aviso de batería baja! Cargar pronto.</string>
+</resources>

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">BatterySentinel</string>
+    <string name="add_alarm">Add Alarm</string>
+    <string name="new_alarm">New Alarm</string>
+    <string name="edit_alarm">Edit Alarm</string>
+    <string name="threshold_percent">Threshold %</string>
+    <string name="message">Message</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="battery_settings_desc">Android Battery Saver</string>
+    <string name="delete_desc">Delete</string>
+    <string name="default_msg_40">Battery dropping! Perhaps enable power saving?</string>
+    <string name="default_msg_25">Low battery warning! Needs charging soon.</string>
+</resources>

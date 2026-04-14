@@ -1,0 +1,13 @@
+<resources>
+    <string name="add_alarm">Alarm Ekle</string>
+    <string name="new_alarm">Yeni Alarm</string>
+    <string name="edit_alarm">Alarmı Düzenle</string>
+    <string name="threshold_percent">Sınır %</string>
+    <string name="message">Mesaj</string>
+    <string name="save">Kaydet</string>
+    <string name="cancel">İptal</string>
+    <string name="battery_settings_desc">Android Güç Tasarrufu</string>
+    <string name="delete_desc">Sil</string>
+    <string name="default_msg_40">Pil düşüyor! Güç tasarrufunu açın?</string>
+    <string name="default_msg_25">Düşük pil uyarısı! Yakında şarj edilmeli.</string>
+</resources>
