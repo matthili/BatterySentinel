@@ -1,4 +1,4 @@
-![BatterySentinel Logo](app/src/main/res/logos/batterysentinel_logo_dunkel_git.png)
+![BatterySentinel Logo](app/logos/batterysentinel_logo_dunkel_git.png)
 
 *[Read this in English](README.md)*
 
@@ -33,4 +33,4 @@ Das Resultat: Sie erhalten zuverlässig Warnungen, wenn Ihr Akku z. B. 40% oder 
 3. Projekt ganz normal bauen oder über `Build > Generate Signed Bundle / APK...` eine eigene APK generieren.
 
 ## 📝 Lizenz
-Dieses Projekt ist Open-Source. Fühlen Sie sich frei, den Code nach Ihren Wünschen zu verwenden und anzupassen!
+Dieses Projekt ist unter der [MIT-Lizenz](LICENSE) lizenziert.

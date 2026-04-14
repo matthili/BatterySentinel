@@ -1,4 +1,4 @@
-![BatterySentinel Logo](app/src/main/res/logos/batterysentinel_logo_dunkel_git.png)
+![BatterySentinel Logo](app/logos/batterysentinel_logo_dunkel_git.png)
 
 *[Lesen Sie dies auf Deutsch (German)](README.de.md)*
 
@@ -33,4 +33,4 @@ This means you get reliable battery alerts when your phone hits 80%, 40%, 20%, e
 3. Build the project or directly generate a Signed APK from `Build > Generate Signed Bundle / APK...`
 
 ## 📝 License
-This project is open-source. Feel free to use and adapt the code as you need!
+This project is licensed under the [MIT License](LICENSE).
