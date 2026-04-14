@@ -1,4 +1,4 @@
-# BatterySentinel
+![BatterySentinel Logo](app/src/main/res/logos/batterysentinel_logo_dunkel_git.png)
 
 *[Lesen Sie dies auf Deutsch (German)](README.de.md)*
 
