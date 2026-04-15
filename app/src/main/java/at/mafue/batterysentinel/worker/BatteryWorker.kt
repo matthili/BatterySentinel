@@ -1,4 +1,4 @@
-package com.example.batterysentinel.worker
+package at.mafue.batterysentinel.worker
 
 import android.content.Context
 import android.content.Intent
@@ -6,7 +6,7 @@ import android.content.IntentFilter
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.batterysentinel.receiver.BatteryChecker
+import at.mafue.batterysentinel.receiver.BatteryChecker
 
 /**
  * A background worker managed by WorkManager. 

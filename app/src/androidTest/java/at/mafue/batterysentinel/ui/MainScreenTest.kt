@@ -1,8 +1,8 @@
-package com.example.batterysentinel.ui
+package at.mafue.batterysentinel.ui
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.*
-import com.example.batterysentinel.MainActivity
+import at.mafue.batterysentinel.MainActivity
 import org.junit.Rule
 import org.junit.Test
 

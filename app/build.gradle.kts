@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.batterysentinel"
+    namespace = "at.mafue.batterysentinel"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.batterysentinel"
+        applicationId = "at.mafue.batterysentinel"
         minSdk = 29
         targetSdk = 34
         versionCode = 1

@@ -1,4 +1,4 @@
-package com.example.batterysentinel.ui.theme
+package at.mafue.batterysentinel.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

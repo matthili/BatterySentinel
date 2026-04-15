@@ -1,14 +1,13 @@
-package com.example.batterysentinel
+package at.mafue.batterysentinel
 
 import android.app.Application
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.ExistingPeriodicWorkPolicy
-import com.example.batterysentinel.receiver.BatteryReceiver
-import com.example.batterysentinel.worker.BatteryWorker
+import at.mafue.batterysentinel.receiver.BatteryReceiver
+import at.mafue.batterysentinel.worker.BatteryWorker
 import java.util.concurrent.TimeUnit
 
 /**

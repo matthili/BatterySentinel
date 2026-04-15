@@ -1,8 +1,8 @@
-package com.example.batterysentinel.ui
+package at.mafue.batterysentinel.ui
 
 import android.app.Application
-import com.example.batterysentinel.data.BatteryAlarm
-import com.example.batterysentinel.data.BatteryPreferences
+import at.mafue.batterysentinel.data.BatteryAlarm
+import at.mafue.batterysentinel.data.BatteryPreferences
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

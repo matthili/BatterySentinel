@@ -1,9 +1,8 @@
-package com.example.batterysentinel.receiver
+package at.mafue.batterysentinel.receiver
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
 import androidx.core.app.NotificationCompat
 
 /**
@@ -24,16 +23,14 @@ object NotificationHelper {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         
         // Starting with Android Oreo (API 26), notifications require channels
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                "Battery Alerts", // User-visible name in system settings
-                NotificationManager.IMPORTANCE_HIGH // ensures it peeks on screen or alerts wristbound wearables
-            ).apply {
-                description = "High priority battery alerts"
-            }
-            notificationManager.createNotificationChannel(channel)
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            "Battery Alerts", // User-visible name in system settings
+            NotificationManager.IMPORTANCE_HIGH // ensures it peeks on screen or alerts wristbound wearables
+        ).apply {
+            description = "High priority battery alerts"
         }
+        notificationManager.createNotificationChannel(channel)
         
         // Build the notification structure
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)

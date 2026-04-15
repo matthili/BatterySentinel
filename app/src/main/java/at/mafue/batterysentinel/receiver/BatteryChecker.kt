@@ -1,4 +1,4 @@
-package com.example.batterysentinel.receiver
+package at.mafue.batterysentinel.receiver
 
 import android.content.Context
 import android.content.Intent
@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.batterysentinel.data.BatteryPreferences
-import com.example.batterysentinel.data.dataStore
+import at.mafue.batterysentinel.data.BatteryPreferences
+import at.mafue.batterysentinel.data.dataStore
 import kotlinx.coroutines.flow.first
 
 /**

@@ -1,4 +1,4 @@
-package com.example.batterysentinel.data
+package at.mafue.batterysentinel.data
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -83,13 +83,13 @@ class BatteryPreferences(private val context: Context) {
                     BatteryAlarm(
                         id = System.currentTimeMillis().toString() + "_1",
                         thresholdPercent = 40,
-                        message = context.getString(com.example.batterysentinel.R.string.default_msg_40),
+                        message = context.getString(at.mafue.batterysentinel.R.string.default_msg_40),
                         isEnabled = true
                     ),
                     BatteryAlarm(
                         id = System.currentTimeMillis().toString() + "_2",
                         thresholdPercent = 25,
-                        message = context.getString(com.example.batterysentinel.R.string.default_msg_25),
+                        message = context.getString(at.mafue.batterysentinel.R.string.default_msg_25),
                         isEnabled = true
                     )
                 )

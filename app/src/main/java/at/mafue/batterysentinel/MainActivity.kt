@@ -1,4 +1,4 @@
-package com.example.batterysentinel
+package at.mafue.batterysentinel
 
 import android.Manifest
 import android.content.Intent
@@ -13,9 +13,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import com.example.batterysentinel.ui.MainScreen
-import com.example.batterysentinel.ui.MainViewModel
-import com.example.batterysentinel.ui.theme.BatterySentinelTheme
+import at.mafue.batterysentinel.ui.MainScreen
+import at.mafue.batterysentinel.ui.MainViewModel
+import at.mafue.batterysentinel.ui.theme.BatterySentinelTheme
 
 /**
  * The main entry point of the application UI. Provides the Jetpack Compose surface
@@ -69,14 +69,12 @@ class MainActivity : ComponentActivity() {
      * receiver isn't entirely suspended by Android Doze mode.
      */
     private fun requestIgnoreBatteryOptimizations() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val pm = getSystemService(POWER_SERVICE) as PowerManager
-            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
-                val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
-                    data = Uri.parse("package:$packageName")
-                }
-                startActivity(intent)
+        val pm = getSystemService(POWER_SERVICE) as PowerManager
+        if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+            val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                data = Uri.parse("package:$packageName")
             }
+            startActivity(intent)
         }
     }
 

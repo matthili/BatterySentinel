@@ -1,10 +1,10 @@
-package com.example.batterysentinel.ui
+package at.mafue.batterysentinel.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.batterysentinel.data.BatteryAlarm
-import com.example.batterysentinel.data.BatteryPreferences
+import at.mafue.batterysentinel.data.BatteryAlarm
+import at.mafue.batterysentinel.data.BatteryPreferences
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn

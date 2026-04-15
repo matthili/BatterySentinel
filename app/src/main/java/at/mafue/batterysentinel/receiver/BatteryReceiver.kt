@@ -1,4 +1,4 @@
-package com.example.batterysentinel.receiver
+package at.mafue.batterysentinel.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
