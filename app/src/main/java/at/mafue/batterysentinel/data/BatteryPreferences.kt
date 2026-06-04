@@ -1,6 +1,7 @@
 package at.mafue.batterysentinel.data
 
 import android.content.Context
+import android.os.Build
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.UUID
 
 // Singleton DataStore instance for the entire application, preventing multiple active instances.
 val Context.dataStore by preferencesDataStore(name = "battery_prefs")
@@ -28,14 +30,24 @@ data class BatteryAlarm(
 )
 
 /**
- * Helper class for managing the parsing, saving, and observing of battery alarms 
- * using AndroidX DataStore for persistent storage.
+ * Helper class for managing the parsing, saving, and observing of battery alarms
+ * and device settings using AndroidX DataStore for persistent storage.
  */
 class BatteryPreferences(private val context: Context) {
     companion object {
+        // Alarm keys
         private val ALARMS_KEY = stringPreferencesKey("alarms_json")
         private val FIRST_RUN_KEY = booleanPreferencesKey("is_first_run")
+
+        // Multi-device settings keys
+        private val DEVICE_NAME_KEY = stringPreferencesKey("device_name")
+        private val DEVICE_ID_KEY = stringPreferencesKey("device_id")
+        private val SEND_TO_OTHERS_KEY = booleanPreferencesKey("send_to_other_devices")
+        private val RECEIVE_FROM_OTHERS_KEY = booleanPreferencesKey("receive_from_other_devices")
+        private val LOCAL_ONLY_KEY = booleanPreferencesKey("local_only_mode")
     }
+
+    // ---- Alarm Flows (unchanged from v1.0) ----
 
     /**
      * A continuous Flow of the currently saved alarms. It automatically parses the JSON
@@ -46,6 +58,47 @@ class BatteryPreferences(private val context: Context) {
         val jsonString = prefs[ALARMS_KEY] ?: "[]"
         parseAlarms(jsonString)
     }
+
+    // ---- Multi-Device Settings Flows ----
+
+    /**
+     * The user-editable device name. Defaults to the device's model name.
+     */
+    val deviceNameFlow: Flow<String> = context.dataStore.data.map { prefs ->
+        prefs[DEVICE_NAME_KEY] ?: Build.MODEL
+    }
+
+    /**
+     * Unique device identifier, persisted across app restarts.
+     * Generated once on first access.
+     */
+    val deviceIdFlow: Flow<String> = context.dataStore.data.map { prefs ->
+        prefs[DEVICE_ID_KEY] ?: ""
+    }
+
+    /**
+     * Whether this device should send battery warnings to other devices.
+     */
+    val sendToOthersFlow: Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[SEND_TO_OTHERS_KEY] ?: false
+    }
+
+    /**
+     * Whether this device should display battery warnings from other devices.
+     */
+    val receiveFromOthersFlow: Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[RECEIVE_FROM_OTHERS_KEY] ?: false
+    }
+
+    /**
+     * Whether this device operates in local-only mode (no multi-device features).
+     * Default is true – multi-device is opt-in.
+     */
+    val localOnlyFlow: Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[LOCAL_ONLY_KEY] ?: true
+    }
+
+    // ---- Alarm Save/Load ----
 
     /**
      * Serializes a list of [BatteryAlarm] objects into a JSON string and saves it to DataStore.
@@ -70,6 +123,7 @@ class BatteryPreferences(private val context: Context) {
     /**
      * Checks if the app is being run for the first time. If so, it populates the DataStore
      * with common default alarms (e.g., 40% and 25%) to help the user get started quickly.
+     * Also generates a unique device ID on first run.
      */
     suspend fun initializeDefaultsIfNeeded() {
         context.dataStore.edit { prefs ->
@@ -77,6 +131,11 @@ class BatteryPreferences(private val context: Context) {
             if (isFirstRun) {
                 // Mark that we've initialized the app
                 prefs[FIRST_RUN_KEY] = false
+
+                // Generate a unique device ID
+                if (prefs[DEVICE_ID_KEY] == null) {
+                    prefs[DEVICE_ID_KEY] = UUID.randomUUID().toString()
+                }
                 
                 // Set up recommended default alarms
                 val defaultAlarms = listOf(
@@ -108,6 +167,30 @@ class BatteryPreferences(private val context: Context) {
             }
         }
     }
+
+    // ---- Multi-Device Settings Save ----
+
+    suspend fun setDeviceName(name: String) {
+        context.dataStore.edit { prefs -> prefs[DEVICE_NAME_KEY] = name }
+    }
+
+    suspend fun setDeviceId(id: String) {
+        context.dataStore.edit { prefs -> prefs[DEVICE_ID_KEY] = id }
+    }
+
+    suspend fun setSendToOthers(enabled: Boolean) {
+        context.dataStore.edit { prefs -> prefs[SEND_TO_OTHERS_KEY] = enabled }
+    }
+
+    suspend fun setReceiveFromOthers(enabled: Boolean) {
+        context.dataStore.edit { prefs -> prefs[RECEIVE_FROM_OTHERS_KEY] = enabled }
+    }
+
+    suspend fun setLocalOnly(enabled: Boolean) {
+        context.dataStore.edit { prefs -> prefs[LOCAL_ONLY_KEY] = enabled }
+    }
+
+    // ---- Private Helpers ----
 
     /**
      * Manually parses a JSON array string into a list of [BatteryAlarm]s.

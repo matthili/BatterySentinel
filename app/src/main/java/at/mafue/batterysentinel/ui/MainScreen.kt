@@ -26,7 +26,8 @@ import at.mafue.batterysentinel.data.BatteryAlarm
 @Composable
 fun MainScreen(
     viewModel: MainViewModel,
-    onPowerSaveClick: () -> Unit
+    onPowerSaveClick: () -> Unit,
+    onSettingsClick: () -> Unit = {}
 ) {
     // Observe the StateFlow from the ViewModel. The UI will automatically redraw
     // whenever the underlying list of alarms changes.
@@ -43,6 +44,14 @@ fun MainScreen(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.app_name)) },
+                actions = {
+                    IconButton(onClick = onSettingsClick) {
+                        Icon(
+                            Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.settings)
+                        )
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.surface,
@@ -146,8 +155,10 @@ fun MainScreen(
                     Spacer(Modifier.height(8.dp))
                     OutlinedTextField(
                         value = message.value,
-                        onValueChange = { message.value = it },
-                        label = { Text(stringResource(R.string.message)) }
+                        onValueChange = { if (it.length <= 200) message.value = it },
+                        label = { Text(stringResource(R.string.message)) },
+                        supportingText = { Text("${message.value.length}/200") },
+                        singleLine = false
                     )
                 }
             },

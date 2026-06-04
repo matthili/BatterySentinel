@@ -9,21 +9,28 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import at.mafue.batterysentinel.data.BatteryPreferences
 import at.mafue.batterysentinel.data.dataStore
+import at.mafue.batterysentinel.firebase.MultiDeviceManager
 import kotlinx.coroutines.flow.first
 
 /**
  * Singleton object responsible for the core logic of checking the battery level
  * against the user-defined alarms. It determines whether an alarm should be triggered
  * or reset based on the current battery state.
+ *
+ * In v2.0, when an alarm is triggered and multi-device sending is enabled,
+ * the alarm is also forwarded to the user's other devices via Firebase Cloud Functions.
  */
 object BatteryChecker {
+
+    private const val TAG = "BatteryChecker"
 
     /**
      * Suspending function called when a battery state change is detected.
      * Evaluates the new battery level and triggers notifications if thresholds are met.
      * 
-     * @param context The application context needed for accessing DataStore and NotificationManager.
-     * @param intent The broadcast intent containing the battery state extras.
+     * IMPORTANT: The triggered state is saved to DataStore IMMEDIATELY after each 
+     * local notification, BEFORE any network calls. This prevents duplicate notifications
+     * if the process is killed during a network call.
      */
     suspend fun checkAlarmsSuspend(context: Context, intent: Intent) {
         // Extract raw battery level and scale from the intent
@@ -39,13 +46,16 @@ object BatteryChecker {
         
         // Calculate the actual battery percentage
         val batteryPct = (level * 100) / scale.toFloat()
-        Log.d("BatteryChecker", "Checking battery: ${batteryPct.toInt()}%")
-
         val currentLevel = batteryPct.toInt()
+        Log.d(TAG, "Checking battery: ${currentLevel}%, charging=$isCharging")
 
         // Load the configured alarms gracefully from DataStore
         val prefs = BatteryPreferences(context)
         val alarms = prefs.alarmsFlow.first()
+        
+        // Load multi-device settings
+        val sendToOthersEnabled = prefs.sendToOthersFlow.first()
+        val deviceName = prefs.deviceNameFlow.first()
         
         // Define preferences keys for maintaining the state across app restarts
         val triggeredPrefsKey = stringPreferencesKey("triggered_alarms")
@@ -56,36 +66,76 @@ object BatteryChecker {
         
         // Retrieve the last known battery level and the IDs of already triggered alarms
         val lastLevel = currentData[lastLevelKey] ?: 100
-        val triggeredSet = currentData[triggeredPrefsKey]?.split(",")?.filter { it.isNotEmpty() }?.toMutableSet() ?: mutableSetOf()
-
-        var stateChanged = false
+        val triggeredSet = currentData[triggeredPrefsKey]
+            ?.split(",")
+            ?.filter { it.isNotEmpty() }
+            ?.toMutableSet() ?: mutableSetOf()
 
         // Logic block: When charging, check if we've surpassed an alarm threshold and reset its triggered state
         if (isCharging && currentLevel > lastLevel) {
             val alarmsToReset = alarms.filter { currentLevel > it.thresholdPercent }.map { it.id }
             if (alarmsToReset.any { triggeredSet.contains(it) }) {
                 triggeredSet.removeAll(alarmsToReset.toSet())
-                stateChanged = true
+                // Save reset state immediately
+                ds.edit { p ->
+                    p[lastLevelKey] = currentLevel
+                    p[triggeredPrefsKey] = triggeredSet.joinToString(",")
+                }
             }
         // Logic block: When discharging, check if battery dropped to or below an alarm threshold
         } else if (!isCharging && currentLevel <= lastLevel) {
             for (alarm in alarms) {
                 // If the alarm is active, threshold is met/exceeded, and it hasn't been triggered yet
                 if (alarm.isEnabled && currentLevel <= alarm.thresholdPercent && !triggeredSet.contains(alarm.id)) {
-                    // Fire the high-priority notification!
-                    NotificationHelper.sendNotification(context, "Battery Sentinel: ${alarm.thresholdPercent}%", alarm.message)
-                    // Mark this alarm as triggered so it won't fire repeatedly
+                    // Fire the high-priority local notification
+                    NotificationHelper.sendNotification(
+                        context, 
+                        "Battery Sentinel: ${alarm.thresholdPercent}%", 
+                        alarm.message
+                    )
+                    
+                    // Mark as triggered and SAVE IMMEDIATELY – before any network calls!
+                    // This prevents duplicate notifications if the process is killed
+                    // during the multi-device network call.
                     triggeredSet.add(alarm.id)
-                    stateChanged = true
+                    ds.edit { p ->
+                        p[lastLevelKey] = currentLevel
+                        p[triggeredPrefsKey] = triggeredSet.joinToString(",")
+                    }
+                    
+                    // If multi-device is enabled: notify other devices via Cloud Function
+                    // This is fire-and-forget – failure must never affect local notifications
+                    if (sendToOthersEnabled) {
+                        try {
+                            val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
+                            if (auth.currentUser == null) {
+                                NotificationHelper.sendNotification(
+                                    context,
+                                    "BatterySentinel",
+                                    "Multi-Device aktiv, aber nicht bei Google angemeldet. Bitte App öffnen und anmelden."
+                                )
+                            } else {
+                                MultiDeviceManager.notifyOtherDevices(
+                                    context, deviceName, alarm.message, alarm.thresholdPercent
+                                )
+                            }
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Could not notify other devices", e)
+                            NotificationHelper.sendNotification(
+                                context,
+                                "BatterySentinel",
+                                "Warnung konnte nicht an andere Geräte gesendet werden."
+                            )
+                        }
+                    }
                 }
             }
         }
 
-        // Save the updated state to DataStore only if something changed or the battery level moved
-        if (stateChanged || lastLevel != currentLevel) {
+        // Always update the last known battery level
+        if (lastLevel != currentLevel) {
             ds.edit { p ->
                 p[lastLevelKey] = currentLevel
-                p[triggeredPrefsKey] = triggeredSet.joinToString(",")
             }
         }
     }

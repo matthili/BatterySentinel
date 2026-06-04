@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">BatterySentinel</string>
     <string name="add_alarm">Alarm hinzufügen</string>
     <string name="new_alarm">Neuer Alarm</string>
     <string name="edit_alarm">Alarm bearbeiten</string>
@@ -6,8 +8,57 @@
     <string name="message">Nachricht</string>
     <string name="save">Speichern</string>
     <string name="cancel">Abbrechen</string>
-    <string name="battery_settings_desc">Android Energiespareinstellungen</string>
+    <string name="battery_settings_desc">Android Energiesparmodus</string>
     <string name="delete_desc">Löschen</string>
-    <string name="default_msg_40">Akku fällt! Energiesparmodus aktivieren?</string>
-    <string name="default_msg_25">Akku fast leer! Bald aufladen.</string>
+    <string name="default_msg_40">Akku sinkt! Vielleicht Energiesparmodus aktivieren?</string>
+    <string name="default_msg_25">Akku-Warnung! Bitte bald aufladen.</string>
+
+    <!-- Settings Screen -->
+    <string name="settings">Einstellungen</string>
+    <string name="settings_device_section">Dieses Gerät</string>
+    <string name="settings_device_name">Gerätename</string>
+    <string name="settings_multi_device_section">Geräte-Verbund</string>
+    <string name="settings_send_to_others">Akku-Warnungen an meine anderen Geräte senden</string>
+    <string name="settings_receive_from_others">Akku-Warnungen von meinen anderen Geräten anzeigen</string>
+    <string name="settings_multi_device_info">Deine Geräte kommunizieren über dein Google-Konto miteinander. Es werden nur der Gerätename und der Akkustand übertragen.</string>
+    <string name="settings_local_only">Nur auf diesem Gerät verwenden (keine Cloud-Funktionen)</string>
+    <string name="settings_language_section">Sprache</string>
+    <string name="settings_language_system">Systemsprache (automatisch)</string>
+    <string name="settings_about_section">Über</string>
+    <string name="settings_version">Version %s</string>
+    <string name="settings_license">Lizenziert unter AGPL-3.0</string>
+    <string name="settings_sign_in">Mit Google anmelden</string>
+    <string name="settings_sign_out">Abmelden</string>
+    <string name="settings_signed_in_as">Angemeldet als %s</string>
+
+    <!-- Permission Check -->
+    <string name="permissions_title">BatterySentinel braucht deine Hilfe</string>
+    <string name="permissions_subtitle">Folgende Berechtigungen fehlen:</string>
+    <string name="permission_notifications">Benachrichtigungen</string>
+    <string name="permission_notifications_desc">Damit dich die App warnen kann, wenn dein Akku einen Schwellenwert erreicht.</string>
+    <string name="permission_battery_optimization">Akku-Optimierung Ausnahme</string>
+    <string name="permission_battery_optimization_desc">Damit Android die Hintergrund-Überwachung nicht abschaltet.</string>
+    <string name="permissions_open_settings">App-Berechtigungen öffnen</string>
+    <string name="permissions_not_now">Jetzt nicht</string>
+    <string name="permissions_all_granted">Alle Berechtigungen erteilt</string>
+
+    <!-- GMS Check -->
+    <string name="gms_not_available">Google Play-Dienste erforderlich</string>
+    <string name="gms_not_available_desc">Der Geräte-Verbund benötigt Google Play-Dienste. Bitte installiere oder aktualisiere die Google Play-Dienste, um diese Funktion zu nutzen.</string>
+    <string name="gms_needs_update">Google Play-Dienste müssen aktualisiert werden</string>
+
+    <!-- Remote Notifications -->
+    <string name="remote_alerts_channel_name">Akku-Warnungen von anderen Geräten</string>
+    <string name="remote_notification_title">%1$s \u2013 %2$d%%</string>
+
+    <!-- Languages -->
+    <string name="lang_en">English</string>
+    <string name="lang_de">Deutsch</string>
+    <string name="lang_es">Español</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_it">Italiano</string>
+    <string name="lang_nl">Nederlands</string>
+    <string name="lang_pl">Polski</string>
+    <string name="lang_pt">Português</string>
+    <string name="lang_tr">Türkçe</string>
 </resources>

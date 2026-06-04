@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BatterySentinel</string>
+    <string name="add_alarm">Alarm toevoegen</string>
+    <string name="new_alarm">Nieuw alarm</string>
+    <string name="edit_alarm">Alarm bewerken</string>
+    <string name="threshold_percent">Drempelwaarde %</string>
+    <string name="message">Bericht</string>
+    <string name="save">Opslaan</string>
+    <string name="cancel">Annuleren</string>
+    <string name="battery_settings_desc">Android Batterijbesparing</string>
+    <string name="delete_desc">Verwijderen</string>
+    <string name="default_msg_40">Batterij daalt! Energiebesparing inschakelen?</string>
+    <string name="default_msg_25">Lage batterij! Moet binnenkort opgeladen worden.</string>
+
+    <!-- Settings Screen -->
+    <string name="settings">Instellingen</string>
+    <string name="settings_device_section">Dit apparaat</string>
+    <string name="settings_device_name">Apparaatnaam</string>
+    <string name="settings_multi_device_section">Apparaatgroep</string>
+    <string name="settings_send_to_others">Batterijwaarschuwingen naar mijn andere apparaten sturen</string>
+    <string name="settings_receive_from_others">Batterijwaarschuwingen van mijn andere apparaten tonen</string>
+    <string name="settings_multi_device_info">Je apparaten communiceren via je Google-account. Alleen de apparaatnaam en het batterijniveau worden verzonden.</string>
+    <string name="settings_local_only">Alleen op dit apparaat gebruiken (geen cloudfuncties)</string>
+    <string name="settings_language_section">Taal</string>
+    <string name="settings_language_system">Systeemtaal (automatisch)</string>
+    <string name="settings_about_section">Over</string>
+    <string name="settings_version">Versie %s</string>
+    <string name="settings_license">Gelicentieerd onder AGPL-3.0</string>
+    <string name="settings_sign_in">Inloggen met Google</string>
+    <string name="settings_sign_out">Uitloggen</string>
+    <string name="settings_signed_in_as">Ingelogd als %s</string>
+
+    <!-- Permission Check -->
+    <string name="permissions_title">BatterySentinel heeft je hulp nodig</string>
+    <string name="permissions_subtitle">De volgende machtigingen ontbreken:</string>
+    <string name="permission_notifications">Meldingen</string>
+    <string name="permission_notifications_desc">Zodat de app je kan waarschuwen wanneer je batterij een drempelwaarde bereikt.</string>
+    <string name="permission_battery_optimization">Uitzondering batterijoptimalisatie</string>
+    <string name="permission_battery_optimization_desc">Zodat Android de achtergrondcontrole niet uitschakelt.</string>
+    <string name="permissions_open_settings">App-machtigingen openen</string>
+    <string name="permissions_not_now">Nu niet</string>
+    <string name="permissions_all_granted">Alle machtigingen verleend</string>
+
+    <!-- GMS Check -->
+    <string name="gms_not_available">Google Play-services vereist</string>
+    <string name="gms_not_available_desc">De apparaatgroepfunctie vereist Google Play-services. Installeer of werk Google Play-services bij om deze functie te gebruiken.</string>
+    <string name="gms_needs_update">Google Play-services moeten bijgewerkt worden</string>
+
+    <!-- Remote Notifications -->
+    <string name="remote_alerts_channel_name">Batterijwaarschuwingen van andere apparaten</string>
+    <string name="remote_notification_title">%1$s \u2013 %2$d%%</string>
+
+    <!-- Languages -->
+    <string name="lang_en">English</string>
+    <string name="lang_de">Deutsch</string>
+    <string name="lang_es">Español</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_it">Italiano</string>
+    <string name="lang_nl">Nederlands</string>
+    <string name="lang_pl">Polski</string>
+    <string name="lang_pt">Português</string>
+    <string name="lang_tr">Türkçe</string>
+</resources>

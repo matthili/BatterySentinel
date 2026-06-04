@@ -1,0 +1,41 @@
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontColor #E0E0E0
+skinparam arrowColor #E0E0E0
+skinparam participantBorderColor #E0E0E0
+skinparam participantBackgroundColor #2B2B2B
+skinparam databaseBorderColor #E0E0E0
+skinparam databaseBackgroundColor #2B2B2B
+skinparam sequenceLifeLineBorderColor #E0E0E0
+skinparam sequenceLifeLineBackgroundColor #444444
+skinparam noteBackgroundColor #333333
+skinparam noteBorderColor #E0E0E0
+skinparam noteFontColor #E0E0E0
+
+title BatterySentinel: Multi-Device Synchronization (V2.0)
+
+participant "Device A\n(e.g., Tablet)" as DevA
+database "Local DataStore\n(Device A)" as DS_A
+participant "Firebase\nCloud Function" as Cloud
+participant "FCM\n(Firebase Cloud Messaging)" as FCM
+participant "Device B\n(e.g., Smartphone)" as DevB
+
+note over DevA: Battery drops\nbelow 20%
+DevA -> DevA: Fire Local Notification
+DevA -> DS_A: Save "Triggered" State (Synchronous)
+note over DevA, DS_A: Prevents duplicates if killed\nduring the network call
+
+DevA -> Cloud: notifyOtherDevices()\n(Auth: Google Sign-In)
+activate Cloud
+Cloud -> Cloud: Verify Auth & Rate Limit\n(Max 50/day)
+Cloud -> Cloud: Query Firestore for\nother registered devices
+Cloud -> FCM: Send High-Priority\nData Message
+deactivate Cloud
+
+FCM -> DevB: Deliver FCM Message
+activate DevB
+DevB -> DevB: FcmService wakes up
+DevB -> DevB: Format Message\n("Tablet - 20%")
+DevB -> DevB: Fire Remote Notification
+deactivate DevB
+@enduml

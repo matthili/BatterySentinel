@@ -1,0 +1,39 @@
+@startuml
+skinparam backgroundColor transparent
+skinparam defaultFontColor #E0E0E0
+skinparam arrowColor #E0E0E0
+skinparam activityBorderColor #E0E0E0
+skinparam activityBackgroundColor #2B2B2B
+skinparam activityDiamondBorderColor #E0E0E0
+skinparam activityDiamondBackgroundColor #2B2B2B
+skinparam noteBackgroundColor #333333
+skinparam noteBorderColor #E0E0E0
+skinparam noteFontColor #E0E0E0
+
+title BatterySentinel: Background Execution Strategy
+
+start
+:App Launched;
+:Register BroadcastReceiver\n(Instant Updates);
+:Schedule WorkManager\n(30 Min Interval);
+
+fork
+    :User kills app or\nOS reclaims RAM;
+    :BroadcastReceiver dies;
+    kill
+fork again
+    repeat
+        :WorkManager triggers\n(Target: Every 30 Min);
+        :Check Uptime &\nTime since last run;
+        if (Time > 45 Min\nAND Uptime > 45 Min?) then (Yes)
+            :Doze Mode Detected!;
+            :Schedule AlarmManager\n(setAndAllowWhileIdle);
+            note right: Overrides Doze Mode
+        else (No)
+            :Running on schedule;
+            :Cancel AlarmManager\n(Save Power);
+        endif
+        :Check Battery &\nFire Alarms if needed;
+    repeat while (WorkManager active)
+end fork
+@enduml

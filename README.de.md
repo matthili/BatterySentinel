@@ -1,8 +1,17 @@
 ![BatterySentinel Logo](app/logos/batterysentinel_logo_dunkel_git.png)
 
+[![Version](https://img.shields.io/badge/version-2.0-blue.svg)](https://github.com/matthili/BatterySentinel/releases)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Android-green.svg)](https://developer.android.com)
+[![API](https://img.shields.io/badge/API-29+-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=29)
+[![Kotlin](https://img.shields.io/badge/kotlin-100%25-orange.svg)](https://kotlinlang.org)
+[![Firebase](https://img.shields.io/badge/Firebase-Multi--Device-yellow.svg)](https://firebase.google.com)
+
 *[Read this in English](README.md)*
 
 BatterySentinel ist absichtlich ein **äußerst kompaktes** und ressourcenschonendes Android-Projekt. Es hat ein einfaches und klares Ziel: Es überwacht den Akkustand im Hintergrund und gibt Warnungen bei bestimmten, benutzerdefinierten Akku-Grenzwerten aus – und das unter **minimalstem Energieverbrauch**.
+
+Mit **Version 2.0** unterstützt BatterySentinel jetzt **Multi-Device Synchronisation**, sodass sich Ihre Geräte gegenseitig warnen können, wenn der Akku zur Neige geht!
 
 ## 📥 Download
 [**BatterySentinel_app-release.apk herunterladen**](https://github.com/matthili/BatterySentinel/releases/latest/download/BatterySentinel_app-release.apk)
@@ -14,18 +23,26 @@ Da diese App nicht über den Google Play Store vertrieben wird, müssen Sie die 
 3. Ihr Smartphone wird vermutlich eine Sicherheitswarnung anzeigen in der Art: **"Aus Sicherheitsgründen kannst du auf dem Smartphone keine unbekannten Apps aus dieser Quelle installieren."**
 4. Tippen Sie in diesem Dialogfeld auf **Einstellungen** und aktivieren Sie den Schalter bei **"Dieser Quelle vertrauen"** (Zulassen aus dieser Quelle).
 5. Gehen Sie danach einen Schritt zurück und tippen Sie auf **Installieren**.
-6. Die App ist nun installiert! Beim ersten Öffnen fordert die App zwei Dinge an: Zum einen die Berechtigung für Benachrichtigungen und zum anderen bittet sie darum, von den systemeigenen Akku-Optimierungen ausgenommen zu werden. Bitte stimmen Sie beidem zu. Die Akku-Ausnahme ist essenziell, damit Android den Überwachungsprozess nicht versehentlich in den Tiefschlaf ("Doze-Mode") versetzt.
+6. Die App ist nun installiert! Beim ersten Öffnen fordert die App Berechtigungen für Benachrichtigungen und eine Ausnahme von den Akku-Optimierungen an. **Bitte stimmen Sie beidem zu.**
 
 ## 🔋 Warum BatterySentinel?
-Moderne Betriebssysteme beenden oft Prozesse im Hintergrund, um Akku zu sparen. BatterySentinel verzichtet komplett auf durchgehend laufende Hintergrunddienste (Foreground Services). Stattdessen reagiert die App nativ auf System-Broadcasts und nutzt ein sehr leichtgewichtiges Sicherheitsnetz über den Android WorkManager.
-Das Resultat: Sie erhalten zuverlässig Warnungen, wenn Ihr Akku z. B. 40% oder 20% erreicht, ohne dass die Überwachungs-App selbst wertvollen Strom verbraucht.
+Moderne Betriebssysteme beenden oft Prozesse im Hintergrund, um Akku zu sparen. BatterySentinel verzichtet komplett auf durchgehend laufende Hintergrunddienste. Stattdessen reagiert die App nativ auf System-Broadcasts und nutzt ein sehr leichtgewichtiges Sicherheitsnetz über den Android WorkManager.
+Das Resultat: Sie erhalten zuverlässig Warnungen, ohne dass die Überwachungs-App selbst wertvollen Strom verbraucht.
 
 ## 🚀 Features
 - **Null Batterie-Drain:** Verwendet nativ `ACTION_BATTERY_CHANGED` Broadcasts, anstatt permanent den Akku auszulesen.
+- **Adaptive Doze-Erkennung:** Aktiviert vollautomatisch einen speziellen Backup-Timer, wenn der Tiefschlaf-Modus von Android (Doze) die normalen Hintergrundaufgaben blockiert.
+- **Multi-Device Sync (V2.0):** Geräte, die mit demselben Google-Konto verbunden sind, können sich gegenseitig Akku-Warnungen schicken.
+- **EU-Infrastruktur:** Die von uns vorkompilierte Release-APK nutzt für die Cloud-Funktionen **ausschließlich Server innerhalb der Europäischen Union (EU)** für maximalen Datenschutz.
 - **Eigene Alarme:** Beliebig viele eigene Schwellenwerte (%) und Meldungen können definiert werden.
 - **Neustart-resistent:** Die Überwachung aktiviert sich nach einem Geräteneustart (Reboot) ganz von selbst wieder.
 - **Modernes UI:** Komplett in Kotlin und Jetpack Compose geschrieben.
 - **DataStore:** Speichert alle Ihre Alarme sicher und asynchron über den modernen AndroidX DataStore.
+
+## 🧠 Architektur im Detail
+Möchten Sie wissen, wie BatterySentinel eine zuverlässige Hintergrundausführung ohne Akkuverbrauch erreicht, oder wie die neue Multi-Device Synchronisation unter der Haube funktioniert?
+
+👉 **[Lesen Sie die Architektur im Detail (Deep Dive)](ARCHITECTURE.de.md)**
 
 ## 🛠️ Selbst kompilieren
 1. Repository klonen.
@@ -33,4 +50,4 @@ Das Resultat: Sie erhalten zuverlässig Warnungen, wenn Ihr Akku z. B. 40% oder 
 3. Projekt ganz normal bauen oder über `Build > Generate Signed Bundle / APK...` eine eigene APK generieren.
 
 ## 📝 Lizenz
-Dieses Projekt ist unter der [MIT-Lizenz](LICENSE) lizenziert.
+Dieses Projekt ist unter der [AGPL-3.0 Lizenz](LICENSE) lizenziert.

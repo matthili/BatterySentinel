@@ -3,8 +3,11 @@ package at.mafue.batterysentinel.ui
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import at.mafue.batterysentinel.data.BatteryAlarm
 import at.mafue.batterysentinel.data.BatteryPreferences
+import at.mafue.batterysentinel.data.dataStore
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -42,6 +45,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun updateAlarm(alarm: BatteryAlarm) {
         val currentList = alarmsFlow.value.toMutableList()
         val index = currentList.indexOfFirst { it.id == alarm.id }
+        
+        val thresholdChanged = if (index != -1) {
+            currentList[index].thresholdPercent != alarm.thresholdPercent
+        } else false
+        
         if (index != -1) {
             currentList[index] = alarm // Replace the existing entry
         } else {
@@ -51,6 +59,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         // Launch in background scope to avoid blocking the main thread
         viewModelScope.launch {
             prefs.saveAlarms(currentList)
+            
+            // If the threshold was changed, reset the triggered state for this alarm
+            // so it can fire again at the new threshold
+            if (thresholdChanged) {
+                resetTriggeredState(alarm.id)
+            }
         }
     }
     
@@ -74,6 +88,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         currentList.add(alarm)
         viewModelScope.launch {
             prefs.saveAlarms(currentList)
+        }
+    }
+
+    /**
+     * Removes a specific alarm ID from the "already triggered" set in DataStore.
+     * This allows the alarm to fire again after its threshold has been changed.
+     */
+    private suspend fun resetTriggeredState(alarmId: String) {
+        val ds = getApplication<Application>().dataStore
+        ds.edit { p ->
+            val triggeredKey = stringPreferencesKey("triggered_alarms")
+            val current = p[triggeredKey]?.split(",")?.filter { it.isNotEmpty() }?.toMutableSet() ?: mutableSetOf()
+            current.remove(alarmId)
+            p[triggeredKey] = current.joinToString(",")
         }
     }
 }

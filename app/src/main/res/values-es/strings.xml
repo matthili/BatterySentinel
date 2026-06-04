@@ -1,13 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="add_alarm">Añadir Alarma</string>
-    <string name="new_alarm">Nueva Alarma</string>
-    <string name="edit_alarm">Editar Alarma</string>
-    <string name="threshold_percent">Límite %</string>
+    <string name="app_name">BatterySentinel</string>
+    <string name="add_alarm">Añadir alarma</string>
+    <string name="new_alarm">Nueva alarma</string>
+    <string name="edit_alarm">Editar alarma</string>
+    <string name="threshold_percent">Umbral %</string>
     <string name="message">Mensaje</string>
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
     <string name="battery_settings_desc">Ahorro de batería Android</string>
     <string name="delete_desc">Eliminar</string>
-    <string name="default_msg_40">¡Batería bajando! ¿Activar ahorro de energía?</string>
-    <string name="default_msg_25">¡Aviso de batería baja! Cargar pronto.</string>
+    <string name="default_msg_40">¡La batería está bajando! ¿Activar el ahorro de energía?</string>
+    <string name="default_msg_25">¡Batería baja! Necesita cargarse pronto.</string>
+
+    <!-- Settings Screen -->
+    <string name="settings">Ajustes</string>
+    <string name="settings_device_section">Este dispositivo</string>
+    <string name="settings_device_name">Nombre del dispositivo</string>
+    <string name="settings_multi_device_section">Grupo de dispositivos</string>
+    <string name="settings_send_to_others">Enviar alertas de batería a mis otros dispositivos</string>
+    <string name="settings_receive_from_others">Mostrar alertas de batería de mis otros dispositivos</string>
+    <string name="settings_multi_device_info">Tus dispositivos se comunican a través de tu cuenta de Google. Solo se transmiten el nombre del dispositivo y el nivel de batería.</string>
+    <string name="settings_local_only">Usar solo en este dispositivo (sin funciones en la nube)</string>
+    <string name="settings_language_section">Idioma</string>
+    <string name="settings_language_system">Idioma del sistema (automático)</string>
+    <string name="settings_about_section">Acerca de</string>
+    <string name="settings_version">Versión %s</string>
+    <string name="settings_license">Licenciado bajo AGPL-3.0</string>
+    <string name="settings_sign_in">Iniciar sesión con Google</string>
+    <string name="settings_sign_out">Cerrar sesión</string>
+    <string name="settings_signed_in_as">Conectado como %s</string>
+
+    <!-- Permission Check -->
+    <string name="permissions_title">BatterySentinel necesita tu ayuda</string>
+    <string name="permissions_subtitle">Faltan los siguientes permisos:</string>
+    <string name="permission_notifications">Notificaciones</string>
+    <string name="permission_notifications_desc">Para que la app pueda avisarte cuando tu batería alcance un umbral.</string>
+    <string name="permission_battery_optimization">Excepción de optimización de batería</string>
+    <string name="permission_battery_optimization_desc">Para que Android no desactive la supervisión en segundo plano.</string>
+    <string name="permissions_open_settings">Abrir permisos de la app</string>
+    <string name="permissions_not_now">Ahora no</string>
+    <string name="permissions_all_granted">Todos los permisos concedidos</string>
+
+    <!-- GMS Check -->
+    <string name="gms_not_available">Se requieren los servicios de Google Play</string>
+    <string name="gms_not_available_desc">La función de grupo de dispositivos requiere los servicios de Google Play. Instala o actualiza los servicios de Google Play para usar esta función.</string>
+    <string name="gms_needs_update">Los servicios de Google Play necesitan actualizarse</string>
+
+    <!-- Remote Notifications -->
+    <string name="remote_alerts_channel_name">Alertas de batería de otros dispositivos</string>
+    <string name="remote_notification_title">%1$s \u2013 %2$d%%</string>
+
+    <!-- Languages -->
+    <string name="lang_en">English</string>
+    <string name="lang_de">Deutsch</string>
+    <string name="lang_es">Español</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_it">Italiano</string>
+    <string name="lang_nl">Nederlands</string>
+    <string name="lang_pl">Polski</string>
+    <string name="lang_pt">Português</string>
+    <string name="lang_tr">Türkçe</string>
 </resources>

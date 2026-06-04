@@ -1,8 +1,17 @@
 ![BatterySentinel Logo](app/logos/batterysentinel_logo_dunkel_git.png)
 
+[![Version](https://img.shields.io/badge/version-2.0-blue.svg)](https://github.com/matthili/BatterySentinel/releases)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Android-green.svg)](https://developer.android.com)
+[![API](https://img.shields.io/badge/API-29+-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=29)
+[![Kotlin](https://img.shields.io/badge/kotlin-100%25-orange.svg)](https://kotlinlang.org)
+[![Firebase](https://img.shields.io/badge/Firebase-Multi--Device-yellow.svg)](https://firebase.google.com)
+
 *[Lesen Sie dies auf Deutsch (German)](README.de.md)*
 
 BatterySentinel is an intentionally **highly compact** and lightweight Android application designed with a single, clear objective: monitoring your device's battery in the background and alerting you when specific, customized battery thresholds are reached, all while consuming the absolute minimum amount of energy.
+
+With **Version 2.0**, BatterySentinel now supports **Multi-Device Synchronization**, allowing your devices to warn each other when their battery is low!
 
 ## 📥 Download
 [**Download the latest BatterySentinel_app-release.apk**](https://github.com/matthili/BatterySentinel/releases/latest/download/BatterySentinel_app-release.apk)
@@ -14,7 +23,7 @@ Since this app is not distributed via the Google Play Store, you will need to "s
 3. Your device will likely show a security warning: **"For your security, your phone is not allowed to install unknown apps from this source."**
 4. Tap **Settings** on that prompt, and toggle on **"Allow from this source"**.
 5. Press the back button and tap **Install**.
-6. The app is now installed! Upon your first launch, the app will request two permissions: First, to send notifications, and second, to be exempt from Android's strict battery optimizations. Please grant both. The battery exemption ensures the system does not force the underlying monitor into deep sleep ("Doze Mode").
+6. The app is now installed! Upon your first launch, the app will request permissions for Notifications and Battery Optimization exemptions. **Please grant both.**
 
 ## 🔋 Why BatterySentinel?
 Modern operating systems often kill background services to save battery life. BatterySentinel works natively with Android's system broadcasts and a lightweight WorkManager safety-net, entirely avoiding the need for permanent background services. 
@@ -22,10 +31,18 @@ This means you get reliable battery alerts when your phone hits 80%, 40%, 20%, e
 
 ## 🚀 Features
 - **Zero-Drain Architecture:** Utilizes system's native `ACTION_BATTERY_CHANGED` broadcasting instead of constantly polling the battery sensor.
+- **Adaptive Doze Detection:** Automatically activates a specialized backup timer if Android's deep sleep mode blocks standard background tasks.
+- **Multi-Device Sync (V2.0):** Devices connected to the same Google Account can send battery warnings to each other.
+- **EU Infrastructure:** The precompiled release APK exclusively uses Firebase Cloud Functions hosted on servers within the **European Union (EU)** for strict privacy.
 - **Custom Alarms:** Set up any number of custom battery percentage alerts.
 - **Boot Persistence:** Automatically survives device reboots. 
 - **Modern UI:** Built fully in Kotlin with Jetpack Compose.
 - **DataStore:** Employs modern AndroidX DataStore for asynchronous, safe settings persistence.
+
+## 🧠 Architecture deep dive
+Curious about how BatterySentinel achieves reliable background execution without draining your battery, or how the new Multi-Device sync works under the hood?
+
+👉 **[Read the Architecture Deep Dive](ARCHITECTURE.md)**
 
 ## 🛠️ Build it yourself
 1. Clone this repository.
@@ -33,4 +50,4 @@ This means you get reliable battery alerts when your phone hits 80%, 40%, 20%, e
 3. Build the project or directly generate a Signed APK from `Build > Generate Signed Bundle / APK...`
 
 ## 📝 License
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [AGPL-3.0 License](LICENSE).

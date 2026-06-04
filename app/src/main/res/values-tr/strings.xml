@@ -1,13 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="add_alarm">Alarm Ekle</string>
-    <string name="new_alarm">Yeni Alarm</string>
-    <string name="edit_alarm">Alarmı Düzenle</string>
-    <string name="threshold_percent">Sınır %</string>
+    <string name="app_name">BatterySentinel</string>
+    <string name="add_alarm">Alarm ekle</string>
+    <string name="new_alarm">Yeni alarm</string>
+    <string name="edit_alarm">Alarmı düzenle</string>
+    <string name="threshold_percent">Eşik değeri %</string>
     <string name="message">Mesaj</string>
     <string name="save">Kaydet</string>
     <string name="cancel">İptal</string>
-    <string name="battery_settings_desc">Android Güç Tasarrufu</string>
+    <string name="battery_settings_desc">Android Pil Tasarrufu</string>
     <string name="delete_desc">Sil</string>
-    <string name="default_msg_40">Pil düşüyor! Güç tasarrufunu açın?</string>
-    <string name="default_msg_25">Düşük pil uyarısı! Yakında şarj edilmeli.</string>
+    <string name="default_msg_40">Pil azalıyor! Enerji tasarrufunu etkinleştirmek ister misin?</string>
+    <string name="default_msg_25">Düşük pil uyarısı! Yakında şarj etmen gerekiyor.</string>
+
+    <!-- Settings Screen -->
+    <string name="settings">Ayarlar</string>
+    <string name="settings_device_section">Bu cihaz</string>
+    <string name="settings_device_name">Cihaz adı</string>
+    <string name="settings_multi_device_section">Cihaz grubu</string>
+    <string name="settings_send_to_others">Pil uyarılarını diğer cihazlarıma gönder</string>
+    <string name="settings_receive_from_others">Diğer cihazlarımdan pil uyarılarını göster</string>
+    <string name="settings_multi_device_info">Cihazların Google hesabın üzerinden iletişim kurar. Yalnızca cihaz adı ve pil seviyesi iletilir.</string>
+    <string name="settings_local_only">Yalnızca bu cihazda kullan (bulut özellikleri olmadan)</string>
+    <string name="settings_language_section">Dil</string>
+    <string name="settings_language_system">Sistem dili (otomatik)</string>
+    <string name="settings_about_section">Hakkında</string>
+    <string name="settings_version">Sürüm %s</string>
+    <string name="settings_license">AGPL-3.0 lisansı altında</string>
+    <string name="settings_sign_in">Google ile giriş yap</string>
+    <string name="settings_sign_out">Çıkış yap</string>
+    <string name="settings_signed_in_as">%s olarak giriş yapıldı</string>
+
+    <!-- Permission Check -->
+    <string name="permissions_title">BatterySentinel yardımına ihtiyaç duyuyor</string>
+    <string name="permissions_subtitle">Aşağıdaki izinler eksik:</string>
+    <string name="permission_notifications">Bildirimler</string>
+    <string name="permission_notifications_desc">Pilin bir eşik değerine ulaştığında seni uyarabilmek için.</string>
+    <string name="permission_battery_optimization">Pil optimizasyonu istisnası</string>
+    <string name="permission_battery_optimization_desc">Android\'in arka plan izlemeyi kapatmasını önlemek için.</string>
+    <string name="permissions_open_settings">Uygulama izinlerini aç</string>
+    <string name="permissions_not_now">Şimdi değil</string>
+    <string name="permissions_all_granted">Tüm izinler verildi</string>
+
+    <!-- GMS Check -->
+    <string name="gms_not_available">Google Play Hizmetleri gerekli</string>
+    <string name="gms_not_available_desc">Cihaz grubu özelliği Google Play Hizmetleri gerektirir. Bu özelliği kullanmak için Google Play Hizmetlerini yükle veya güncelle.</string>
+    <string name="gms_needs_update">Google Play Hizmetleri güncellenmeli</string>
+
+    <!-- Remote Notifications -->
+    <string name="remote_alerts_channel_name">Diğer cihazlardan pil uyarıları</string>
+    <string name="remote_notification_title">%1$s \u2013 %2$d%%</string>
+
+    <!-- Languages -->
+    <string name="lang_en">English</string>
+    <string name="lang_de">Deutsch</string>
+    <string name="lang_es">Español</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_it">Italiano</string>
+    <string name="lang_nl">Nederlands</string>
+    <string name="lang_pl">Polski</string>
+    <string name="lang_pt">Português</string>
+    <string name="lang_tr">Türkçe</string>
 </resources>

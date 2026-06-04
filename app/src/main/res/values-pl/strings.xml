@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BatterySentinel</string>
+    <string name="add_alarm">Dodaj alarm</string>
+    <string name="new_alarm">Nowy alarm</string>
+    <string name="edit_alarm">Edytuj alarm</string>
+    <string name="threshold_percent">Próg %</string>
+    <string name="message">Wiadomość</string>
+    <string name="save">Zapisz</string>
+    <string name="cancel">Anuluj</string>
+    <string name="battery_settings_desc">Oszczędzanie baterii Android</string>
+    <string name="delete_desc">Usuń</string>
+    <string name="default_msg_40">Bateria spada! Włączyć oszczędzanie energii?</string>
+    <string name="default_msg_25">Niski poziom baterii! Wkrótce trzeba naładować.</string>
+
+    <!-- Settings Screen -->
+    <string name="settings">Ustawienia</string>
+    <string name="settings_device_section">To urządzenie</string>
+    <string name="settings_device_name">Nazwa urządzenia</string>
+    <string name="settings_multi_device_section">Grupa urządzeń</string>
+    <string name="settings_send_to_others">Wysyłaj ostrzeżenia o baterii do moich innych urządzeń</string>
+    <string name="settings_receive_from_others">Pokazuj ostrzeżenia o baterii z moich innych urządzeń</string>
+    <string name="settings_multi_device_info">Twoje urządzenia komunikują się przez Twoje konto Google. Przesyłane są tylko nazwa urządzenia i poziom baterii.</string>
+    <string name="settings_local_only">Używaj tylko na tym urządzeniu (bez funkcji chmury)</string>
+    <string name="settings_language_section">Język</string>
+    <string name="settings_language_system">Język systemowy (automatyczny)</string>
+    <string name="settings_about_section">O aplikacji</string>
+    <string name="settings_version">Wersja %s</string>
+    <string name="settings_license">Licencja AGPL-3.0</string>
+    <string name="settings_sign_in">Zaloguj się przez Google</string>
+    <string name="settings_sign_out">Wyloguj się</string>
+    <string name="settings_signed_in_as">Zalogowano jako %s</string>
+
+    <!-- Permission Check -->
+    <string name="permissions_title">BatterySentinel potrzebuje Twojej pomocy</string>
+    <string name="permissions_subtitle">Brakuje następujących uprawnień:</string>
+    <string name="permission_notifications">Powiadomienia</string>
+    <string name="permission_notifications_desc">Aby aplikacja mogła Cię ostrzec, gdy bateria osiągnie próg.</string>
+    <string name="permission_battery_optimization">Wyjątek optymalizacji baterii</string>
+    <string name="permission_battery_optimization_desc">Aby Android nie wyłączał monitorowania w tle.</string>
+    <string name="permissions_open_settings">Otwórz uprawnienia aplikacji</string>
+    <string name="permissions_not_now">Nie teraz</string>
+    <string name="permissions_all_granted">Wszystkie uprawnienia przyznane</string>
+
+    <!-- GMS Check -->
+    <string name="gms_not_available">Wymagane Usługi Google Play</string>
+    <string name="gms_not_available_desc">Funkcja grupy urządzeń wymaga Usług Google Play. Zainstaluj lub zaktualizuj Usługi Google Play, aby korzystać z tej funkcji.</string>
+    <string name="gms_needs_update">Usługi Google Play wymagają aktualizacji</string>
+
+    <!-- Remote Notifications -->
+    <string name="remote_alerts_channel_name">Ostrzeżenia o baterii z innych urządzeń</string>
+    <string name="remote_notification_title">%1$s \u2013 %2$d%%</string>
+
+    <!-- Languages -->
+    <string name="lang_en">English</string>
+    <string name="lang_de">Deutsch</string>
+    <string name="lang_es">Español</string>
+    <string name="lang_fr">Français</string>
+    <string name="lang_it">Italiano</string>
+    <string name="lang_nl">Nederlands</string>
+    <string name="lang_pl">Polski</string>
+    <string name="lang_pt">Português</string>
+    <string name="lang_tr">Türkçe</string>
+</resources>
