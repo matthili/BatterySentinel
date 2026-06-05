@@ -33,6 +33,7 @@ This means you get reliable battery alerts when your phone hits 80%, 40%, 20%, e
 - **Zero-Drain Architecture:** Utilizes system's native `ACTION_BATTERY_CHANGED` broadcasting instead of constantly polling the battery sensor.
 - **Adaptive Doze Detection:** Automatically activates a specialized backup timer if Android's deep sleep mode blocks standard background tasks.
 - **Multi-Device Sync (V2.0):** Devices connected to the same Google Account can send battery warnings to each other.
+- **Diagnostic Logging:** Features an integrated, robust text-based log viewer to securely review background operations and threshold checks directly within the app.
 - **EU Infrastructure:** The precompiled release APK exclusively uses Firebase Cloud Functions hosted on servers within the **European Union (EU)** for strict privacy.
 - **Custom Alarms:** Set up any number of custom battery percentage alerts.
 - **Boot Persistence:** Automatically survives device reboots. 

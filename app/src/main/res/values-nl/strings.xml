@@ -61,4 +61,24 @@
     <string name="lang_pl">Polski</string>
     <string name="lang_pt">Português</string>
     <string name="lang_tr">Türkçe</string>
+    <string name="log_view_button">Bekijk diagnoselogboek</string>
+    <string name="log_screen_title">Diagnoselogboek</string>
+    <string name="log_clear_button">Logboek wissen</string>
+    <string name="log_empty">Logboek is leeg</string>
+    <string name="log_action_threshold_reached">Alarmdrempel bereikt</string>
+    <string name="log_action_local_warning">Lokale waarschuwing afgegeven</string>
+    <string name="log_action_cloud_sent">Waarschuwing verzonden naar cloud</string>
+    <string name="log_action_cloud_received">Waarschuwing ontvangen vanuit cloud</string>
+    <string name="log_action_cloud_warning_issued">Waarschuwing afgegeven voor</string>
+    <string name="log_action_doze_detected">WorkManager geblokkeerd</string>
+    <string name="log_value_doze_detected">Overgeschakeld naar AlarmManager</string>
+    <string name="log_action_doze_ended">WorkManager hersteld</string>
+    <string name="log_value_doze_ended">AlarmManager gedeactiveerd</string>
+    <string name="log_action_cyclic_check">Cyclische controle uitgevoerd</string>
+    <string name="log_value_via_workmanager">via WorkManager</string>
+    <string name="log_value_via_alarmmanager">via AlarmManager</string>
+    <string name="settings_worker_runs">Achtergrondcontrole: %1$s (totaal: %2$dx via WorkManager, %3$dx via AlarmManager)</string>
+    <string name="settings_worker_never">Nooit</string>
+    <string name="settings_worker_just_now">Zojuist</string>
+    <string name="settings_worker_mins_ago">%d min geleden</string>
 </resources>

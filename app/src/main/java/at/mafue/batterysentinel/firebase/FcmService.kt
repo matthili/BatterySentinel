@@ -9,6 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import at.mafue.batterysentinel.util.EventLogger
+import at.mafue.batterysentinel.R
 
 /**
  * Firebase Cloud Messaging service that handles incoming data messages
@@ -47,6 +49,16 @@ class FcmService : FirebaseMessagingService() {
                     val receiveEnabled = prefs.receiveFromOthersFlow.first()
                     
                     if (receiveEnabled) {
+                        EventLogger.logEvent(
+                            applicationContext,
+                            applicationContext.getString(R.string.log_action_cloud_received),
+                            deviceName
+                        )
+                        EventLogger.logEvent(
+                            applicationContext,
+                            "${applicationContext.getString(R.string.log_action_cloud_warning_issued)} $deviceName",
+                            alertMessage
+                        )
                         NotificationHelper.sendRemoteNotification(
                             applicationContext,
                             deviceName,

@@ -12,6 +12,8 @@ import at.mafue.batterysentinel.receiver.AlarmScheduler
 import at.mafue.batterysentinel.receiver.BatteryChecker
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
+import at.mafue.batterysentinel.util.EventLogger
+import at.mafue.batterysentinel.R
 import kotlinx.coroutines.flow.first
 
 /**
@@ -38,6 +40,10 @@ class BatteryWorker(
         val LAST_RUN_KEY = longPreferencesKey("worker_last_run_ms")
         val RUN_COUNT_KEY = longPreferencesKey("worker_run_count")
         
+        // AlarmManager specific counters
+        val ALARM_LAST_RUN_KEY = longPreferencesKey("alarm_last_run_ms")
+        val ALARM_RUN_COUNT_KEY = longPreferencesKey("alarm_run_count")
+        
         // If the gap between runs exceeds this, Doze is delaying us
         private const val DOZE_THRESHOLD_MS = 45 * 60 * 1000L  // 45 minutes
     }
@@ -61,15 +67,32 @@ class BatteryWorker(
                 if (gap > DOZE_THRESHOLD_MS && uptimeMs > DOZE_THRESHOLD_MS) {
                     // Device has been running long enough AND the gap is too large → Doze
                     Log.d(TAG, "Doze detected. Activating AlarmManager backup.")
+                    EventLogger.logEvent(
+                        context,
+                        context.getString(R.string.log_action_doze_detected),
+                        context.getString(R.string.log_value_doze_detected)
+                    )
                     AlarmScheduler.schedule(context)
                 } else {
                     // Either running on time, or device just booted (gap from being off)
                     Log.d(TAG, "Running on schedule. AlarmManager not needed.")
+                    // Only log deactivation if it was previously active (optional optimization, but we can just log if we cancel)
+                    // We don't have an easy way to check if it's active here without querying AlarmManager, 
+                    // so we just cancel. We'll only log if we know for sure, but for now we just cancel.
+                    // Actually, if last run was very late, we might have activated it. 
+                    if (gap <= DOZE_THRESHOLD_MS && gap > 0) {
+                        // Just running on schedule
+                    }
                     AlarmScheduler.cancel(context)
                 }
             }
             
             // Record that the worker ran
+            EventLogger.logEvent(
+                context,
+                context.getString(R.string.log_action_cyclic_check),
+                context.getString(R.string.log_value_via_workmanager)
+            )
             context.dataStore.edit { prefs ->
                 prefs[LAST_RUN_KEY] = now
                 prefs[RUN_COUNT_KEY] = runCount + 1

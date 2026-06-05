@@ -43,3 +43,10 @@ Version 2.0 führt die Möglichkeit ein, Akkuwarnungen an andere Geräte zu send
 - Es werden ausschließlich der Gerätename, der aktuelle Akkustand und die benutzerdefinierte Nachricht übertragen.
 - Die Authentifizierung läuft komplett sicher über Google (keine eigenen Passwörter erforderlich).
 - **Vorkompilierte Version:** Bei Verwendung der von uns vorkompilierten APK aus den offiziellen Releases, werden für alle Firebase Cloud Functions und Firestore-Datenbanken **ausschließlich Server innerhalb der Europäischen Union (EU)** verwendet, um strengste Datenschutzstandards zu gewährleisten.
+
+## 3. Diagnose-Logging System
+
+BatterySentinel verfügt über ein integriertes, persistentes Text-Logging-System (`events.log`), um Transparenz in das Hintergrundverhalten zu bringen, ohne signifikant Strom zu verbrauchen.
+- **Append-Only Betrieb:** Der `EventLogger` schreibt Logs in den lokalen App-Speicher und verwendet dafür einen IO Coroutine-Dispatcher, um den Main-Thread niemals zu blockieren.
+- **Auto-Wartung:** Der Logger begrenzt das Log kontinuierlich auf 1000 Einträge (ältere Einträge werden über einen robusten FIFO-Ansatz verworfen), um sicherzustellen, dass der Speicher- und RAM-Bedarf über die Zeit komplett vernachlässigbar bleibt.
+- **Korruptions-Resilienz:** Falls das Dateisystem durch Schreibsperren oder unerwartete Schäden blockiert wird (was normales Parsing verhindert), erkennt der Logger dies. Er bereinigt betroffene Zeilen proaktiv oder erstellt die Datei ganz neu, um absolute Stabilität zu garantieren.

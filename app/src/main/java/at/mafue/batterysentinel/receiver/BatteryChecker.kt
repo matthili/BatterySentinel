@@ -10,6 +10,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import at.mafue.batterysentinel.data.BatteryPreferences
 import at.mafue.batterysentinel.data.dataStore
 import at.mafue.batterysentinel.firebase.MultiDeviceManager
+import at.mafue.batterysentinel.util.EventLogger
+import at.mafue.batterysentinel.R
 import kotlinx.coroutines.flow.first
 
 /**
@@ -94,6 +96,17 @@ object BatteryChecker {
                         alarm.message
                     )
                     
+                    EventLogger.logEvent(
+                        context,
+                        context.getString(R.string.log_action_threshold_reached),
+                        "${alarm.thresholdPercent}%"
+                    )
+                    EventLogger.logEvent(
+                        context,
+                        context.getString(R.string.log_action_local_warning),
+                        alarm.message
+                    )
+                    
                     // Mark as triggered and SAVE IMMEDIATELY – before any network calls!
                     // This prevents duplicate notifications if the process is killed
                     // during the multi-device network call.
@@ -117,6 +130,11 @@ object BatteryChecker {
                             } else {
                                 MultiDeviceManager.notifyOtherDevices(
                                     context, deviceName, alarm.message, alarm.thresholdPercent
+                                )
+                                EventLogger.logEvent(
+                                    context,
+                                    context.getString(R.string.log_action_cloud_sent),
+                                    alarm.message
                                 )
                             }
                         } catch (e: Exception) {

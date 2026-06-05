@@ -61,4 +61,24 @@
     <string name="lang_pl">Polski</string>
     <string name="lang_pt">Português</string>
     <string name="lang_tr">Türkçe</string>
+    <string name="log_view_button">Visualizza registro diagnostico</string>
+    <string name="log_screen_title">Registro diagnostico</string>
+    <string name="log_clear_button">Cancella registro</string>
+    <string name="log_empty">Il registro è vuoto</string>
+    <string name="log_action_threshold_reached">Soglia di allarme raggiunta</string>
+    <string name="log_action_local_warning">Avviso locale emesso</string>
+    <string name="log_action_cloud_sent">Avviso inviato al cloud</string>
+    <string name="log_action_cloud_received">Avviso ricevuto dal cloud</string>
+    <string name="log_action_cloud_warning_issued">Avviso emesso per</string>
+    <string name="log_action_doze_detected">WorkManager bloccato</string>
+    <string name="log_value_doze_detected">Passato ad AlarmManager</string>
+    <string name="log_action_doze_ended">WorkManager ripristinato</string>
+    <string name="log_value_doze_ended">AlarmManager disattivato</string>
+    <string name="log_action_cyclic_check">Controllo ciclico eseguito</string>
+    <string name="log_value_via_workmanager">tramite WorkManager</string>
+    <string name="log_value_via_alarmmanager">tramite AlarmManager</string>
+    <string name="settings_worker_runs">Controllo in background: %1$s (totale: %2$dx tramite WorkManager, %3$dx tramite AlarmManager)</string>
+    <string name="settings_worker_never">Mai</string>
+    <string name="settings_worker_just_now">Proprio ora</string>
+    <string name="settings_worker_mins_ago">%d min fa</string>
 </resources>

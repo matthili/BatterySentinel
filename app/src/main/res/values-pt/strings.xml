@@ -61,4 +61,24 @@
     <string name="lang_pl">Polski</string>
     <string name="lang_pt">Português</string>
     <string name="lang_tr">Türkçe</string>
+    <string name="log_view_button">Ver registro de diagnóstico</string>
+    <string name="log_screen_title">Registro de diagnóstico</string>
+    <string name="log_clear_button">Limpar registro</string>
+    <string name="log_empty">O registro está vazio</string>
+    <string name="log_action_threshold_reached">Limiar de alarme atingido</string>
+    <string name="log_action_local_warning">Aviso local emitido</string>
+    <string name="log_action_cloud_sent">Aviso enviado para a nuvem</string>
+    <string name="log_action_cloud_received">Aviso recebido da nuvem</string>
+    <string name="log_action_cloud_warning_issued">Aviso emitido para</string>
+    <string name="log_action_doze_detected">WorkManager bloqueado</string>
+    <string name="log_value_doze_detected">Mudou para AlarmManager</string>
+    <string name="log_action_doze_ended">WorkManager restaurado</string>
+    <string name="log_value_doze_ended">AlarmManager desativado</string>
+    <string name="log_action_cyclic_check">Verificação cíclica realizada</string>
+    <string name="log_value_via_workmanager">via WorkManager</string>
+    <string name="log_value_via_alarmmanager">via AlarmManager</string>
+    <string name="settings_worker_runs">Verificação em segundo plano: %1$s (total: %2$dx via WorkManager, %3$dx via AlarmManager)</string>
+    <string name="settings_worker_never">Nunca</string>
+    <string name="settings_worker_just_now">Agora mesmo</string>
+    <string name="settings_worker_mins_ago">%d min atrás</string>
 </resources>

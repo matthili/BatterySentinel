@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -27,6 +27,7 @@ import at.mafue.batterysentinel.ui.MainViewModel
 import at.mafue.batterysentinel.ui.PermissionCheckOverlay
 import at.mafue.batterysentinel.ui.SettingsScreen
 import at.mafue.batterysentinel.ui.SettingsViewModel
+import at.mafue.batterysentinel.ui.LogScreen
 import at.mafue.batterysentinel.ui.theme.BatterySentinelTheme
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -39,7 +40,7 @@ import kotlinx.coroutines.launch
  * navigation between Main and Settings screens, Google Sign-In via Credential Manager,
  * and permission management.
  */
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "MainActivity"
     }
@@ -92,7 +93,13 @@ class MainActivity : ComponentActivity() {
                                 coroutineScope.launch {
                                     startGoogleSignIn()
                                 }
-                            }
+                            },
+                            onViewLogClick = { navController.navigate("log") }
+                        )
+                    }
+                    composable("log") {
+                        LogScreen(
+                            onBack = { navController.popBackStack() }
                         )
                     }
                 }

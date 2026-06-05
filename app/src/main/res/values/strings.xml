@@ -61,4 +61,26 @@
     <string name="lang_pl">Polski</string>
     <string name="lang_pt">Português</string>
     <string name="lang_tr">Türkçe</string>
+
+    <!-- Logging / Diagnostics -->
+    <string name="log_view_button">View Diagnostic Log</string>
+    <string name="log_screen_title">Diagnostic Log</string>
+    <string name="log_clear_button">Clear Log</string>
+    <string name="log_empty">Log is empty</string>
+    <string name="log_action_threshold_reached">Alarm threshold reached</string>
+    <string name="log_action_local_warning">Local warning issued</string>
+    <string name="log_action_cloud_sent">Warning sent to cloud</string>
+    <string name="log_action_cloud_received">Warning received from cloud</string>
+    <string name="log_action_cloud_warning_issued">Warning issued for</string>
+    <string name="log_action_doze_detected">WorkManager blocked</string>
+    <string name="log_value_doze_detected">Switched to AlarmManager</string>
+    <string name="log_action_doze_ended">WorkManager restored</string>
+    <string name="log_value_doze_ended">Deactivated AlarmManager</string>
+    <string name="log_action_cyclic_check">Cyclic check performed</string>
+    <string name="log_value_via_workmanager">via WorkManager</string>
+    <string name="log_value_via_alarmmanager">via AlarmManager</string>
+    <string name="settings_worker_runs">Background check: %1$s (total: %2$dx via WorkManager, %3$dx via AlarmManager)</string>
+    <string name="settings_worker_never">Never</string>
+    <string name="settings_worker_just_now">Just now</string>
+    <string name="settings_worker_mins_ago">%d mins ago</string>
 </resources>

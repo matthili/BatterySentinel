@@ -33,6 +33,7 @@ Das Resultat: Sie erhalten zuverlässig Warnungen, ohne dass die Überwachungs-A
 - **Null Batterie-Drain:** Verwendet nativ `ACTION_BATTERY_CHANGED` Broadcasts, anstatt permanent den Akku auszulesen.
 - **Adaptive Doze-Erkennung:** Aktiviert vollautomatisch einen speziellen Backup-Timer, wenn der Tiefschlaf-Modus von Android (Doze) die normalen Hintergrundaufgaben blockiert.
 - **Multi-Device Sync (V2.0):** Geräte, die mit demselben Google-Konto verbunden sind, können sich gegenseitig Akku-Warnungen schicken.
+- **Diagnose-Log:** Verfügt über einen integrierten, robusten Log-Viewer auf Textbasis, um Hintergrundaktivitäten und Schwellenwert-Prüfungen sicher direkt in der App zu überprüfen.
 - **EU-Infrastruktur:** Die von uns vorkompilierte Release-APK nutzt für die Cloud-Funktionen **ausschließlich Server innerhalb der Europäischen Union (EU)** für maximalen Datenschutz.
 - **Eigene Alarme:** Beliebig viele eigene Schwellenwerte (%) und Meldungen können definiert werden.
 - **Neustart-resistent:** Die Überwachung aktiviert sich nach einem Geräteneustart (Reboot) ganz von selbst wieder.

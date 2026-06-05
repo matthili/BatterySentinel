@@ -61,4 +61,24 @@
     <string name="lang_pl">Polski</string>
     <string name="lang_pt">Português</string>
     <string name="lang_tr">Türkçe</string>
+    <string name="log_view_button">Tanı Günlüğünü Görüntüle</string>
+    <string name="log_screen_title">Tanı Günlüğü</string>
+    <string name="log_clear_button">Günlüğü Temizle</string>
+    <string name="log_empty">Günlük boş</string>
+    <string name="log_action_threshold_reached">Alarm eşiğine ulaşıldı</string>
+    <string name="log_action_local_warning">Yerel uyarı verildi</string>
+    <string name="log_action_cloud_sent">Uyarı buluta gönderildi</string>
+    <string name="log_action_cloud_received">Uyarı buluttan alındı</string>
+    <string name="log_action_cloud_warning_issued">İçin uyarı verildi</string>
+    <string name="log_action_doze_detected">WorkManager engellendi</string>
+    <string name="log_value_doze_detected">AlarmManager\'a geçildi</string>
+    <string name="log_action_doze_ended">WorkManager geri yüklendi</string>
+    <string name="log_value_doze_ended">AlarmManager devre dışı bırakıldı</string>
+    <string name="log_action_cyclic_check">Döngüsel kontrol gerçekleştirildi</string>
+    <string name="log_value_via_workmanager">WorkManager aracılığıyla</string>
+    <string name="log_value_via_alarmmanager">AlarmManager aracılığıyla</string>
+    <string name="settings_worker_runs">Arka plan kontrolü: %1$s (toplam: %2$dx WorkManager aracılığıyla, %3$dx AlarmManager aracılığıyla)</string>
+    <string name="settings_worker_never">Asla</string>
+    <string name="settings_worker_just_now">Az önce</string>
+    <string name="settings_worker_mins_ago">%d dk önce</string>
 </resources>

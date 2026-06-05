@@ -35,7 +35,8 @@ import at.mafue.batterysentinel.firebase.GmsStatus
 fun SettingsScreen(
     viewModel: SettingsViewModel,
     onBack: () -> Unit,
-    onSignInClick: () -> Unit
+    onSignInClick: () -> Unit,
+    onViewLogClick: () -> Unit
 ) {
     val deviceName by viewModel.deviceNameFlow.collectAsState()
     val localOnly by viewModel.localOnlyFlow.collectAsState()
@@ -245,6 +246,15 @@ fun SettingsScreen(
 
             // Worker diagnostics
             WorkerDiagnostics()
+
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(
+                onClick = onViewLogClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.log_view_button))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
@@ -317,19 +327,24 @@ fun WorkerDiagnostics() {
         initial = androidx.datastore.preferences.core.emptyPreferences()
     )
     
-    val lastRunMs = prefs[at.mafue.batterysentinel.worker.BatteryWorker.LAST_RUN_KEY] ?: 0L
-    val runCount = prefs[at.mafue.batterysentinel.worker.BatteryWorker.RUN_COUNT_KEY] ?: 0L
+    val workerLastRunMs = prefs[at.mafue.batterysentinel.worker.BatteryWorker.LAST_RUN_KEY] ?: 0L
+    val alarmLastRunMs = prefs[at.mafue.batterysentinel.worker.BatteryWorker.ALARM_LAST_RUN_KEY] ?: 0L
+    val workerRunCount = prefs[at.mafue.batterysentinel.worker.BatteryWorker.RUN_COUNT_KEY] ?: 0L
+    val alarmRunCount = prefs[at.mafue.batterysentinel.worker.BatteryWorker.ALARM_RUN_COUNT_KEY] ?: 0L
+    
+    val lastRunMs = maxOf(workerLastRunMs, alarmLastRunMs)
     
     val lastRunText = if (lastRunMs > 0) {
         val ago = (System.currentTimeMillis() - lastRunMs) / 1000 / 60
-        if (ago < 1) "gerade eben" else "vor ${ago} Min."
+        if (ago < 1) stringResource(R.string.settings_worker_just_now) 
+        else stringResource(R.string.settings_worker_mins_ago, ago)
     } else {
-        "noch nie"
+        stringResource(R.string.settings_worker_never)
     }
     
     Spacer(Modifier.height(8.dp))
     Text(
-        text = "Hintergrund-Check: $lastRunText (${runCount}× gelaufen)",
+        text = stringResource(R.string.settings_worker_runs, lastRunText, workerRunCount, alarmRunCount),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant
     )

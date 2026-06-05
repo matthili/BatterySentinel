@@ -61,4 +61,24 @@
     <string name="lang_pl">Polski</string>
     <string name="lang_pt">Português</string>
     <string name="lang_tr">Türkçe</string>
+    <string name="log_view_button">Wyświetl dziennik diagnostyczny</string>
+    <string name="log_screen_title">Dziennik diagnostyczny</string>
+    <string name="log_clear_button">Wyczyść dziennik</string>
+    <string name="log_empty">Dziennik jest pusty</string>
+    <string name="log_action_threshold_reached">Osiągnięto próg alarmowy</string>
+    <string name="log_action_local_warning">Wydano lokalne ostrzeżenie</string>
+    <string name="log_action_cloud_sent">Ostrzeżenie wysłane do chmury</string>
+    <string name="log_action_cloud_received">Ostrzeżenie odebrane z chmury</string>
+    <string name="log_action_cloud_warning_issued">Ostrzeżenie wydane dla</string>
+    <string name="log_action_doze_detected">WorkManager zablokowany</string>
+    <string name="log_value_doze_detected">Przełączono na AlarmManager</string>
+    <string name="log_action_doze_ended">WorkManager przywrócony</string>
+    <string name="log_value_doze_ended">AlarmManager dezaktywowany</string>
+    <string name="log_action_cyclic_check">Wykonano kontrolę cykliczną</string>
+    <string name="log_value_via_workmanager">przez WorkManager</string>
+    <string name="log_value_via_alarmmanager">przez AlarmManager</string>
+    <string name="settings_worker_runs">Kontrola w tle: %1$s (łącznie: %2$dx przez WorkManager, %3$dx przez AlarmManager)</string>
+    <string name="settings_worker_never">Nigdy</string>
+    <string name="settings_worker_just_now">Przed chwilą</string>
+    <string name="settings_worker_mins_ago">%d min temu</string>
 </resources>
