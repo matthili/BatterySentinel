@@ -4,9 +4,10 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
+import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
+import androidx.core.net.toUri
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -37,9 +38,13 @@ fun checkAllPermissions(context: Context): List<PermissionStatus> {
     val permissions = mutableListOf<PermissionStatus>()
     
     // 1. POST_NOTIFICATIONS (required for Android 13+)
-    val notificationsGranted = ContextCompat.checkSelfPermission(
-        context, Manifest.permission.POST_NOTIFICATIONS
-    ) == PackageManager.PERMISSION_GRANTED
+    val notificationsGranted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        ContextCompat.checkSelfPermission(
+            context, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+    } else {
+        true // Permission not needed before Android 13
+    }
     
     permissions.add(
         PermissionStatus(
@@ -148,7 +153,7 @@ fun PermissionCheckOverlay(
                 onClick = {
                     // Open app-specific settings
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                        data = Uri.parse("package:${context.packageName}")
+                        data = "package:${context.packageName}".toUri()
                     }
                     context.startActivity(intent)
                 }

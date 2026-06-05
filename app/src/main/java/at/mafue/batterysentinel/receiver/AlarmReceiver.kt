@@ -21,6 +21,12 @@ import at.mafue.batterysentinel.R
  * This receiver is ONLY active when the BatteryWorker detects that
  * Doze mode is delaying its execution. It fires during Doze and
  * reschedules itself for the next check.
+ *
+ * Important: The AlarmReceiver reschedules the next alarm itself,
+ * because setAndAllowWhileIdle() is a one-shot API. However, it
+ * ONLY reschedules if ALARM_ACTIVE_KEY is still true – meaning
+ * the BatteryWorker has not yet deactivated AlarmManager mode.
+ * This prevents an unstoppable alarm chain.
  */
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -31,16 +37,25 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Log.d(TAG, "AlarmManager fired – checking battery during Doze")
         
-        // Reschedule next alarm immediately
-        AlarmScheduler.schedule(context)
-        
         // Check battery in a coroutine (onReceive has ~10 seconds)
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                // Check if AlarmManager mode is still active before rescheduling
+                val currentData = context.dataStore.data.first()
+                val alarmActive = currentData[BatteryWorker.ALARM_ACTIVE_KEY] ?: false
+                
+                if (!alarmActive) {
+                    Log.d(TAG, "AlarmManager mode deactivated by Worker – not rescheduling.")
+                    pendingResult.finish()
+                    return@launch
+                }
+                
+                // Reschedule next alarm (only if still in alarm mode)
+                AlarmScheduler.schedule(context)
+                
                 // Record AlarmManager run
                 val now = System.currentTimeMillis()
-                val currentData = context.dataStore.data.first()
                 val runCount = currentData[BatteryWorker.ALARM_RUN_COUNT_KEY] ?: 0L
                 
                 context.dataStore.edit { prefs ->
@@ -69,3 +84,4 @@ class AlarmReceiver : BroadcastReceiver() {
         }
     }
 }
+

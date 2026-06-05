@@ -327,7 +327,7 @@ fun WorkerDiagnostics() {
         initial = androidx.datastore.preferences.core.emptyPreferences()
     )
     
-    val workerLastRunMs = prefs[at.mafue.batterysentinel.worker.BatteryWorker.LAST_RUN_KEY] ?: 0L
+    val workerLastRunMs = prefs[at.mafue.batterysentinel.worker.BatteryWorker.WORKER_LAST_RUN_KEY] ?: 0L
     val alarmLastRunMs = prefs[at.mafue.batterysentinel.worker.BatteryWorker.ALARM_LAST_RUN_KEY] ?: 0L
     val workerRunCount = prefs[at.mafue.batterysentinel.worker.BatteryWorker.RUN_COUNT_KEY] ?: 0L
     val alarmRunCount = prefs[at.mafue.batterysentinel.worker.BatteryWorker.ALARM_RUN_COUNT_KEY] ?: 0L

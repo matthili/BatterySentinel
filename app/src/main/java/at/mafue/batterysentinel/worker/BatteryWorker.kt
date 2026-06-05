@@ -10,6 +10,7 @@ import androidx.work.WorkerParameters
 import at.mafue.batterysentinel.data.dataStore
 import at.mafue.batterysentinel.receiver.AlarmScheduler
 import at.mafue.batterysentinel.receiver.BatteryChecker
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import at.mafue.batterysentinel.util.EventLogger
@@ -21,14 +22,22 @@ import kotlinx.coroutines.flow.first
  * Periodically checks the battery level as a fallback when the dynamic
  * BroadcastReceiver is not alive.
  *
- * Adaptive Doze detection: if the worker detects that its previous run
- * was delayed significantly (> 45 minutes for a 30-minute interval),
- * it activates AlarmManager as a more reliable backup that fires during Doze.
- * If the worker runs on time again, AlarmManager is deactivated (saves battery).
+ * Adaptive Doze detection: if the worker detects that its previous
+ * WorkManager run was delayed significantly (> 45 minutes for a 30-minute
+ * interval), it activates AlarmManager as a more reliable backup.
+ * If the worker runs on time again, AlarmManager is deactivated.
  *
- * To avoid false positives after a device reboot (where the gap is caused
- * by the device being off, not by Doze), the detection only triggers when
- * the device has been running longer than the threshold.
+ * Key design decisions:
+ * - WORKER_LAST_RUN_KEY tracks only WorkManager runs (not AlarmManager)
+ *   so that the gap calculation accurately reflects whether WorkManager
+ *   is being delayed by Doze. If AlarmManager wrote to this key too,
+ *   the gap would always appear short and Doze would never be detected.
+ * - ALARM_ACTIVE_KEY is a boolean flag that tracks whether AlarmManager
+ *   mode is currently active. This allows proper logging of transitions
+ *   and prevents the worker from cancelling an alarm that was never set.
+ * - The AlarmReceiver does NOT reschedule itself. Only the worker
+ *   decides whether AlarmManager should remain active, preventing an
+ *   unstoppable self-rescheduling chain.
  */
 class BatteryWorker(
     private val context: Context,
@@ -37,14 +46,23 @@ class BatteryWorker(
 
     companion object {
         private const val TAG = "BatteryWorker"
-        val LAST_RUN_KEY = longPreferencesKey("worker_last_run_ms")
+        
+        // WorkManager-only timestamp – NOT written by AlarmReceiver
+        val WORKER_LAST_RUN_KEY = longPreferencesKey("worker_last_run_ms")
         val RUN_COUNT_KEY = longPreferencesKey("worker_run_count")
         
         // AlarmManager specific counters
         val ALARM_LAST_RUN_KEY = longPreferencesKey("alarm_last_run_ms")
         val ALARM_RUN_COUNT_KEY = longPreferencesKey("alarm_run_count")
         
-        // If the gap between runs exceeds this, Doze is delaying us
+        // Tracks whether AlarmManager backup mode is currently active
+        val ALARM_ACTIVE_KEY = booleanPreferencesKey("alarm_active")
+        
+        // Legacy key alias kept for DataStore migration compatibility
+        @Deprecated("Use WORKER_LAST_RUN_KEY", replaceWith = ReplaceWith("WORKER_LAST_RUN_KEY"))
+        val LAST_RUN_KEY = WORKER_LAST_RUN_KEY
+        
+        // If the gap between WorkManager runs exceeds this, Doze is delaying us
         private const val DOZE_THRESHOLD_MS = 45 * 60 * 1000L  // 45 minutes
     }
 
@@ -54,47 +72,60 @@ class BatteryWorker(
         return try {
             val now = System.currentTimeMillis()
             
-            // Read last run time and check for Doze delay
+            // Read last WorkManager run time
             val currentData = context.dataStore.data.first()
-            val lastRunMs = currentData[LAST_RUN_KEY] ?: 0L
+            val lastWorkerRunMs = currentData[WORKER_LAST_RUN_KEY] ?: 0L
             val runCount = currentData[RUN_COUNT_KEY] ?: 0L
+            val alarmCurrentlyActive = currentData[ALARM_ACTIVE_KEY] ?: false
             
-            if (lastRunMs > 0) {
-                val gap = now - lastRunMs
+            if (lastWorkerRunMs > 0) {
+                val gap = now - lastWorkerRunMs
                 val uptimeMs = SystemClock.elapsedRealtime()
-                Log.d(TAG, "Gap since last run: ${gap / 60000} min, uptime: ${uptimeMs / 60000} min")
+                Log.d(TAG, "Gap since last WorkManager run: ${gap / 60000} min, uptime: ${uptimeMs / 60000} min, alarm active: $alarmCurrentlyActive")
                 
                 if (gap > DOZE_THRESHOLD_MS && uptimeMs > DOZE_THRESHOLD_MS) {
-                    // Device has been running long enough AND the gap is too large → Doze
-                    Log.d(TAG, "Doze detected. Activating AlarmManager backup.")
+                    // WorkManager is being delayed by Doze → activate AlarmManager
+                    if (!alarmCurrentlyActive) {
+                        Log.d(TAG, "Doze detected. Activating AlarmManager backup.")
+                        EventLogger.logEvent(
+                            context,
+                            context.getString(R.string.log_action_doze_detected),
+                            context.getString(R.string.log_value_doze_detected)
+                        )
+                        AlarmScheduler.schedule(context)
+                        context.dataStore.edit { prefs ->
+                            prefs[ALARM_ACTIVE_KEY] = true
+                        }
+                    } else {
+                        // AlarmManager already active, just reschedule it
+                        Log.d(TAG, "Doze still active. Refreshing AlarmManager schedule.")
+                        AlarmScheduler.schedule(context)
+                    }
+                } else if (alarmCurrentlyActive) {
+                    // WorkManager is running on schedule again → deactivate AlarmManager
+                    Log.d(TAG, "WorkManager on schedule again. Deactivating AlarmManager.")
                     EventLogger.logEvent(
                         context,
-                        context.getString(R.string.log_action_doze_detected),
-                        context.getString(R.string.log_value_doze_detected)
+                        context.getString(R.string.log_action_doze_ended),
+                        context.getString(R.string.log_value_doze_ended)
                     )
-                    AlarmScheduler.schedule(context)
-                } else {
-                    // Either running on time, or device just booted (gap from being off)
-                    Log.d(TAG, "Running on schedule. AlarmManager not needed.")
-                    // Only log deactivation if it was previously active (optional optimization, but we can just log if we cancel)
-                    // We don't have an easy way to check if it's active here without querying AlarmManager, 
-                    // so we just cancel. We'll only log if we know for sure, but for now we just cancel.
-                    // Actually, if last run was very late, we might have activated it. 
-                    if (gap <= DOZE_THRESHOLD_MS && gap > 0) {
-                        // Just running on schedule
-                    }
                     AlarmScheduler.cancel(context)
+                    context.dataStore.edit { prefs ->
+                        prefs[ALARM_ACTIVE_KEY] = false
+                    }
                 }
             }
             
-            // Record that the worker ran
+            // Log the cyclic check
             EventLogger.logEvent(
                 context,
                 context.getString(R.string.log_action_cyclic_check),
                 context.getString(R.string.log_value_via_workmanager)
             )
+            
+            // Record that the WorkManager ran (this timestamp is ONLY for WorkManager)
             context.dataStore.edit { prefs ->
-                prefs[LAST_RUN_KEY] = now
+                prefs[WORKER_LAST_RUN_KEY] = now
                 prefs[RUN_COUNT_KEY] = runCount + 1
             }
 
