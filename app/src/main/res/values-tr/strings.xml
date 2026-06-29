@@ -81,4 +81,17 @@
     <string name="settings_worker_never">Asla</string>
     <string name="settings_worker_just_now">Az önce</string>
     <string name="settings_worker_mins_ago">%d dk önce</string>
+
+    <!-- Update Checker -->
+    <string name="update_check_button">Güncellemeleri kontrol et</string>
+    <string name="update_checking">Kontrol ediliyor…</string>
+    <string name="update_available">Güncelleme mevcut: Sürüm %s</string>
+    <string name="update_download">İndir &amp; Kur</string>
+    <string name="update_downloading">İndiriliyor…</string>
+    <string name="update_install">Güncellemeyi kur</string>
+    <string name="update_up_to_date">En son sürümü kullanıyorsun.</string>
+    <string name="update_error">Güncelleme kontrolü başarısız oldu: %s</string>
+    <string name="update_permission_title">İzin gerekli</string>
+    <string name="update_permission_desc">Güncellemeyi yüklemek için BatterySentinel\'in uygulama yükleme iznine ihtiyacı var. Lütfen sonraki ekranda \"Bu kaynaktan izin ver\" seçeneğini etkinleştirin.</string>
+    <string name="update_permission_button">Ayarları aç</string>
 </resources>

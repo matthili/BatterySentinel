@@ -81,4 +81,17 @@
     <string name="settings_worker_never">Jamais</string>
     <string name="settings_worker_just_now">À l\'instant</string>
     <string name="settings_worker_mins_ago">il y a %d min</string>
+
+    <!-- Update Checker -->
+    <string name="update_check_button">Rechercher des mises à jour</string>
+    <string name="update_checking">Vérification…</string>
+    <string name="update_available">Mise à jour disponible : Version %s</string>
+    <string name="update_download">Télécharger &amp; Installer</string>
+    <string name="update_downloading">Téléchargement…</string>
+    <string name="update_install">Installer la mise à jour</string>
+    <string name="update_up_to_date">Vous utilisez la dernière version.</string>
+    <string name="update_error">Échec de la vérification des mises à jour : %s</string>
+    <string name="update_permission_title">Autorisation requise</string>
+    <string name="update_permission_desc">Pour installer la mise à jour, BatterySentinel a besoin de l\'autorisation d\'installer des applications. Veuillez activer \"Autoriser depuis cette source\" sur l\'écran suivant.</string>
+    <string name="update_permission_button">Ouvrir les paramètres</string>
 </resources>

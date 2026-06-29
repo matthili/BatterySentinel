@@ -81,4 +81,17 @@
     <string name="settings_worker_never">Nooit</string>
     <string name="settings_worker_just_now">Zojuist</string>
     <string name="settings_worker_mins_ago">%d min geleden</string>
+
+    <!-- Update Checker -->
+    <string name="update_check_button">Controleren op updates</string>
+    <string name="update_checking">Controleren…</string>
+    <string name="update_available">Update beschikbaar: Versie %s</string>
+    <string name="update_download">Downloaden &amp; Installeren</string>
+    <string name="update_downloading">Downloaden…</string>
+    <string name="update_install">Update installeren</string>
+    <string name="update_up_to_date">Je gebruikt de nieuwste versie.</string>
+    <string name="update_error">Updatecontrole mislukt: %s</string>
+    <string name="update_permission_title">Toestemming vereist</string>
+    <string name="update_permission_desc">Om de update te installeren heeft BatterySentinel toestemming nodig om apps te installeren. Schakel \"Toestaan vanuit deze bron\" in op het volgende scherm.</string>
+    <string name="update_permission_button">Instellingen openen</string>
 </resources>

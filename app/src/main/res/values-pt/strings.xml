@@ -81,4 +81,17 @@
     <string name="settings_worker_never">Nunca</string>
     <string name="settings_worker_just_now">Agora mesmo</string>
     <string name="settings_worker_mins_ago">%d min atrás</string>
+
+    <!-- Update Checker -->
+    <string name="update_check_button">Verificar atualizações</string>
+    <string name="update_checking">A verificar…</string>
+    <string name="update_available">Atualização disponível: Versão %s</string>
+    <string name="update_download">Transferir &amp; Instalar</string>
+    <string name="update_downloading">A transferir…</string>
+    <string name="update_install">Instalar atualização</string>
+    <string name="update_up_to_date">Estás a utilizar a versão mais recente.</string>
+    <string name="update_error">Falha ao verificar atualizações: %s</string>
+    <string name="update_permission_title">Permissão necessária</string>
+    <string name="update_permission_desc">Para instalar a atualização, o BatterySentinel precisa de permissão para instalar aplicações. Por favor, ativa \"Permitir desta fonte\" no ecrã seguinte.</string>
+    <string name="update_permission_button">Abrir definições</string>
 </resources>

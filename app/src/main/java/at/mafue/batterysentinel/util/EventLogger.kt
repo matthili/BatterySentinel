@@ -103,7 +103,7 @@ object EventLogger {
                     results.add("$dateStr ; $timeStr ; Defekter Eintrag erkannt ; Log-Zeile bereinigt")
                 }
             }
-            results
+            results.asReversed()
         } catch (e: Exception) {
             Log.e(TAG, "Failed to read logs", e)
             listOf("$dateStr ; $timeStr ; Fehler beim Lesen ; Log-Datei konnte nicht gelesen werden")

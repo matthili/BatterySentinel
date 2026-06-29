@@ -2,6 +2,7 @@ package at.mafue.batterysentinel.ui
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,6 +21,9 @@ import at.mafue.batterysentinel.BuildConfig
 import at.mafue.batterysentinel.R
 import at.mafue.batterysentinel.data.dataStore
 import at.mafue.batterysentinel.firebase.GmsStatus
+import at.mafue.batterysentinel.util.GitHubUpdater
+import kotlinx.coroutines.launch
+import java.io.File
 
 /**
  * Settings screen for BatterySentinel.
@@ -244,6 +248,9 @@ fun SettingsScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
+            // --- Update Checker ---
+            UpdateSection(context)
+
             // Worker diagnostics
             WorkerDiagnostics()
 
@@ -362,4 +369,204 @@ fun SectionHeader(title: String) {
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.primary
     )
+}
+
+/**
+ * Self-contained update checker UI.
+ *
+ * States: Idle → Checking → UpdateAvailable / UpToDate / Error → Downloading → ReadyToInstall.
+ * Handles the "Install from Unknown Sources" permission flow inline.
+ */
+@Composable
+fun UpdateSection(context: android.content.Context) {
+    val coroutineScope = rememberCoroutineScope()
+
+    // UI state
+    var updateState by remember { mutableStateOf<UpdateUiState>(UpdateUiState.Idle) }
+    var downloadProgress by remember { mutableStateOf(0f) }
+
+    when (val state = updateState) {
+        is UpdateUiState.Idle -> {
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedButton(
+                onClick = {
+                    updateState = UpdateUiState.Checking
+                    coroutineScope.launch {
+                        val result = GitHubUpdater.checkForUpdate()
+                        updateState = when (result) {
+                            is GitHubUpdater.UpdateResult.UpToDate -> UpdateUiState.UpToDate
+                            is GitHubUpdater.UpdateResult.UpdateAvailable ->
+                                UpdateUiState.Available(result.newVersion, result.downloadUrl)
+                            is GitHubUpdater.UpdateResult.Error ->
+                                UpdateUiState.Error(result.message)
+                        }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.update_check_button))
+            }
+        }
+
+        is UpdateUiState.Checking -> {
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedButton(
+                onClick = {},
+                enabled = false,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(18.dp),
+                    strokeWidth = 2.dp
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(stringResource(R.string.update_checking))
+            }
+        }
+
+        is UpdateUiState.UpToDate -> {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.update_up_to_date),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            TextButton(onClick = { updateState = UpdateUiState.Idle }) {
+                Text(stringResource(R.string.update_check_button))
+            }
+        }
+
+        is UpdateUiState.Available -> {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.update_available, state.version),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            // Check if permission to install packages is granted
+            val canInstall = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.packageManager.canRequestPackageInstalls()
+            } else {
+                true
+            }
+
+            if (!canInstall) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = stringResource(R.string.update_permission_title),
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = stringResource(R.string.update_permission_desc),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        OutlinedButton(
+                            onClick = {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    val intent = Intent(
+                                        Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
+                                        Uri.parse("package:${context.packageName}")
+                                    )
+                                    context.startActivity(intent)
+                                }
+                            }
+                        ) {
+                            Text(stringResource(R.string.update_permission_button))
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(
+                onClick = {
+                    updateState = UpdateUiState.Downloading
+                    downloadProgress = 0f
+                    coroutineScope.launch {
+                        try {
+                            val file = GitHubUpdater.downloadApk(
+                                context,
+                                state.downloadUrl
+                            ) { progress ->
+                                if (progress >= 0f) downloadProgress = progress
+                            }
+                            updateState = UpdateUiState.ReadyToInstall(file)
+                        } catch (e: Exception) {
+                            updateState = UpdateUiState.Error(
+                                e.localizedMessage ?: e.toString()
+                            )
+                        }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.update_download))
+            }
+        }
+
+        is UpdateUiState.Downloading -> {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.update_downloading),
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            LinearProgressIndicator(
+                progress = { downloadProgress },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+
+        is UpdateUiState.ReadyToInstall -> {
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(
+                onClick = {
+                    GitHubUpdater.installApk(context, state.file)
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.update_install))
+            }
+        }
+
+        is UpdateUiState.Error -> {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(R.string.update_error, state.message),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            TextButton(onClick = { updateState = UpdateUiState.Idle }) {
+                Text(stringResource(R.string.update_check_button))
+            }
+        }
+    }
+}
+
+/**
+ * Represents the possible states of the update UI.
+ */
+private sealed class UpdateUiState {
+    data object Idle : UpdateUiState()
+    data object Checking : UpdateUiState()
+    data object UpToDate : UpdateUiState()
+    data class Available(val version: String, val downloadUrl: String) : UpdateUiState()
+    data object Downloading : UpdateUiState()
+    data class ReadyToInstall(val file: File) : UpdateUiState()
+    data class Error(val message: String) : UpdateUiState()
 }
