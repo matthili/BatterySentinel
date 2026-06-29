@@ -1,6 +1,6 @@
 ![BatterySentinel Logo](app/logos/batterysentinel_logo_dunkel_git.png)
 
-[![Version](https://img.shields.io/badge/version-2.6-blue.svg)](https://github.com/matthili/BatterySentinel/releases)
+[![Version](https://img.shields.io/badge/version-2.7-blue.svg)](https://github.com/matthili/BatterySentinel/releases)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](https://developer.android.com)
 [![API](https://img.shields.io/badge/API-29+-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=29)

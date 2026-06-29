@@ -74,9 +74,9 @@ object GitHubUpdater {
                 val responseBody = connection.inputStream.bufferedReader().use { it.readText() }
                 val json = JSONObject(responseBody)
 
-                // tag_name is typically "v2.6" or "2.6"
+                // tag_name may be "v2.6", "V2.6" or "2.6" — strip any leading v/V
                 val tagName = json.getString("tag_name")
-                val remoteVersion = tagName.removePrefix("v").trim()
+                val remoteVersion = tagName.trim().trimStart('v', 'V')
                 val currentVersion = BuildConfig.VERSION_NAME.trim()
 
                 if (!isNewerVersion(remoteVersion, currentVersion)) {

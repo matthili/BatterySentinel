@@ -12,8 +12,8 @@ android {
         applicationId = "at.mafue.batterysentinel"
         minSdk = 29
         targetSdk = 34
-        versionCode = 3
-        versionName = "2.6"
+        versionCode = 4
+        versionName = "2.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
