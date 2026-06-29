@@ -26,9 +26,9 @@ If a device enters deep Doze Mode, WorkManager runs can be delayed by hours. Bat
 - The `AlarmReceiver` fires every 30 minutes, checks the battery, and reschedules itself.
 - Once the worker starts running on schedule again (device woke up, Doze ended), it intelligently deactivates the AlarmManager to resume maximum power saving.
 
-## 2. Multi-Device Synchronization (V2.0)
+## 2. Multi-Device Synchronization
 
-Version 2.0 introduces the ability to send battery warnings to your other devices (e.g., warning your phone that your tablet is at 20%).
+BatterySentinel can send battery warnings to your other devices (e.g., warning your phone that your tablet is at 20%).
 
 ![Multi-Device Synchronization](docs/diagrams/architecture_multidevice.png)
 

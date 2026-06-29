@@ -12,7 +12,7 @@ skinparam noteBackgroundColor #333333
 skinparam noteBorderColor #E0E0E0
 skinparam noteFontColor #E0E0E0
 
-title BatterySentinel: Multi-Device Synchronization (V2.0)
+title BatterySentinel: Multi-Device Synchronization
 
 participant "Device A\n(e.g., Tablet)" as DevA
 database "Local DataStore\n(Device A)" as DS_A

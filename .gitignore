@@ -60,3 +60,19 @@ google-services.json
 
 #VS Code
 .vscode/
+
+# Project Briefing
+PROJECT_BRIEFING.md
+
+# Claude Code (local assistant files)
+.claude/
+CLAUDE.md
+
+# Kotlin compiler cache
+.kotlin/
+
+# Release build outputs (regenerated on every release build)
+/app/release/
+
+# Profiler heap dumps
+*.hprof

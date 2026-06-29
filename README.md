@@ -1,6 +1,6 @@
 ![BatterySentinel Logo](app/logos/batterysentinel_logo_dunkel_git.png)
 
-[![Version](https://img.shields.io/badge/version-2.0-blue.svg)](https://github.com/matthili/BatterySentinel/releases)
+[![Version](https://img.shields.io/badge/version-2.6-blue.svg)](https://github.com/matthili/BatterySentinel/releases)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](https://developer.android.com)
 [![API](https://img.shields.io/badge/API-29+-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=29)
@@ -11,7 +11,7 @@
 
 BatterySentinel is an intentionally **highly compact** and lightweight Android application designed with a single, clear objective: monitoring your device's battery in the background and alerting you when specific, customized battery thresholds are reached, all while consuming the absolute minimum amount of energy.
 
-With **Version 2.0**, BatterySentinel now supports **Multi-Device Synchronization**, allowing your devices to warn each other when their battery is low!
+BatterySentinel supports **Multi-Device Synchronization**, letting your devices warn each other when their battery is low — and it keeps itself up to date with a **built-in GitHub updater**, no app store required!
 
 ## 📥 Download
 [**Download the latest BatterySentinel_app-release.apk**](https://github.com/matthili/BatterySentinel/releases/latest/download/BatterySentinel_app-release.apk)
@@ -32,7 +32,8 @@ This means you get reliable battery alerts when your phone hits 80%, 40%, 20%, e
 ## 🚀 Features
 - **Zero-Drain Architecture:** Utilizes system's native `ACTION_BATTERY_CHANGED` broadcasting instead of constantly polling the battery sensor.
 - **Adaptive Doze Detection:** Automatically activates a specialized backup timer if Android's deep sleep mode blocks standard background tasks.
-- **Multi-Device Sync (V2.0):** Devices connected to the same Google Account can send battery warnings to each other.
+- **Multi-Device Sync:** Devices connected to the same Google Account can send battery warnings to each other.
+- **Built-in Updater:** Checks GitHub Releases and installs new versions directly from within the app — no Play Store required.
 - **Diagnostic Logging:** Features an integrated, robust text-based log viewer to securely review background operations and threshold checks directly within the app.
 - **EU Infrastructure:** The precompiled release APK exclusively uses Firebase Cloud Functions hosted on servers within the **European Union (EU)** for strict privacy.
 - **Custom Alarms:** Set up any number of custom battery percentage alerts.

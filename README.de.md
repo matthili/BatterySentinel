@@ -1,6 +1,6 @@
 ![BatterySentinel Logo](app/logos/batterysentinel_logo_dunkel_git.png)
 
-[![Version](https://img.shields.io/badge/version-2.0-blue.svg)](https://github.com/matthili/BatterySentinel/releases)
+[![Version](https://img.shields.io/badge/version-2.6-blue.svg)](https://github.com/matthili/BatterySentinel/releases)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](https://developer.android.com)
 [![API](https://img.shields.io/badge/API-29+-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=29)
@@ -11,7 +11,7 @@
 
 BatterySentinel ist absichtlich ein **äußerst kompaktes** und ressourcenschonendes Android-Projekt. Es hat ein einfaches und klares Ziel: Es überwacht den Akkustand im Hintergrund und gibt Warnungen bei bestimmten, benutzerdefinierten Akku-Grenzwerten aus – und das unter **minimalstem Energieverbrauch**.
 
-Mit **Version 2.0** unterstützt BatterySentinel jetzt **Multi-Device Synchronisation**, sodass sich Ihre Geräte gegenseitig warnen können, wenn der Akku zur Neige geht!
+BatterySentinel unterstützt **Multi-Device Synchronisation**, sodass sich Ihre Geräte gegenseitig warnen können, wenn der Akku zur Neige geht – und hält sich über einen **integrierten GitHub-Updater** selbst aktuell, ganz ohne App-Store!
 
 ## 📥 Download
 [**BatterySentinel_app-release.apk herunterladen**](https://github.com/matthili/BatterySentinel/releases/latest/download/BatterySentinel_app-release.apk)
@@ -32,7 +32,8 @@ Das Resultat: Sie erhalten zuverlässig Warnungen, ohne dass die Überwachungs-A
 ## 🚀 Features
 - **Null Batterie-Drain:** Verwendet nativ `ACTION_BATTERY_CHANGED` Broadcasts, anstatt permanent den Akku auszulesen.
 - **Adaptive Doze-Erkennung:** Aktiviert vollautomatisch einen speziellen Backup-Timer, wenn der Tiefschlaf-Modus von Android (Doze) die normalen Hintergrundaufgaben blockiert.
-- **Multi-Device Sync (V2.0):** Geräte, die mit demselben Google-Konto verbunden sind, können sich gegenseitig Akku-Warnungen schicken.
+- **Multi-Device Sync:** Geräte, die mit demselben Google-Konto verbunden sind, können sich gegenseitig Akku-Warnungen schicken.
+- **Integrierter Updater:** Prüft die GitHub-Releases und installiert neue Versionen direkt in der App – kein Play Store nötig.
 - **Diagnose-Log:** Verfügt über einen integrierten, robusten Log-Viewer auf Textbasis, um Hintergrundaktivitäten und Schwellenwert-Prüfungen sicher direkt in der App zu überprüfen.
 - **EU-Infrastruktur:** Die von uns vorkompilierte Release-APK nutzt für die Cloud-Funktionen **ausschließlich Server innerhalb der Europäischen Union (EU)** für maximalen Datenschutz.
 - **Eigene Alarme:** Beliebig viele eigene Schwellenwerte (%) und Meldungen können definiert werden.

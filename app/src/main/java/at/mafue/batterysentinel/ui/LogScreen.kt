@@ -99,7 +99,7 @@ fun LogScreen(onBack: () -> Unit) {
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                            Divider(modifier = Modifier.padding(top = 8.dp), color = MaterialTheme.colorScheme.surfaceVariant)
+                            HorizontalDivider(modifier = Modifier.padding(top = 8.dp), color = MaterialTheme.colorScheme.surfaceVariant)
                         }
                     } else {
                         // Malformed line fallback
@@ -109,7 +109,7 @@ fun LogScreen(onBack: () -> Unit) {
                             color = MaterialTheme.colorScheme.error,
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
-                        Divider(modifier = Modifier.padding(top = 8.dp), color = MaterialTheme.colorScheme.surfaceVariant)
+                        HorizontalDivider(modifier = Modifier.padding(top = 8.dp), color = MaterialTheme.colorScheme.surfaceVariant)
                     }
                 }
             }

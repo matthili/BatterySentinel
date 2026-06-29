@@ -26,9 +26,9 @@ Wenn das Gerät in den tiefen Doze-Modus wechselt, können WorkManager-Läufe st
 - Der `AlarmReceiver` feuert nun zuverlässig im Tiefschlaf alle 30 Minuten, prüft den Akku und plant sich selbst neu.
 - Sobald der Worker wieder pünktlich läuft (Gerät wurde aufgeweckt, Doze beendet), wird der AlarmManager automatisch deaktiviert, um wieder maximal Strom zu sparen.
 
-## 2. Multi-Device Synchronisation (V2.0)
+## 2. Multi-Device Synchronisation
 
-Version 2.0 führt die Möglichkeit ein, Akkuwarnungen an andere Geräte zu senden (z. B. warnt das Tablet das Smartphone bei 20%).
+BatterySentinel kann Akkuwarnungen an andere Geräte senden (z. B. warnt das Tablet das Smartphone bei 20%).
 
 ![Multi-Device Synchronization](docs/diagrams/architecture_multidevice.png)
 
